@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KelvenOS Optimizer | Scripts de Otimização Windows</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8A2BE2;
+            --primary-dark: #6A0DAD;
+            --primary-light: #9D4EDD;
+            --secondary: #00D4AA;
+            --discord: #7289DA;
+            --dark: #0A0A0F;
+            --darker: #050508;
+            --card-bg: #121218;
+            --text: #FFFFFF;
+            --text-secondary: #A0A0B0;
+            --border: #2A2A35;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --glow: 0 0 20px rgba(138, 43, 226, 0.3);
+            --success: #00C851;
+            --warning: #ffbb33;
+            --danger: #ff4444;
+            --basic: #0078D4;
+            --intermediate: #FF6B6B;
+            --advanced: #9D4EDD;
+            --gaming: #00C851;
+            --workstation: #FFD166;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--text);line-height:1.6;overflow-x:hidden}
+        .container{width:90%;max-width:1200px;margin:0 auto;padding:0 20px}
+        header{position:fixed;top:0;width:100%;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);z-index:1000;border-bottom:1px solid var(--border);padding:20px 0}
+        nav{display:flex;justify-content:space-between;align-items:center}
+        .logo{font-size:1.8rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;display:flex;align-items:center;gap:10px}
+        .nav-links{display:flex;gap:2.5rem;list-style:none}
+        .nav-links a{color:var(--text);text-decoration:none;font-weight:500;font-size:1rem;transition:all .3s ease;position:relative;padding:5px 0}
+        .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--gradient);transition:width .3s ease}
+        .nav-links a:hover::after{width:100%}
+        .hero{min-height:100vh;display:flex;align-items:center;padding-top:100px;background:radial-gradient(circle at 20% 50%,rgba(138,43,226,.15) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(0,212,170,.1) 0%,transparent 50%)}
+        .hero-content{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+        .hero-text h1{font-size:3.5rem;font-weight:800;line-height:1.2;margin-bottom:1.5rem;background:linear-gradient(to right,var(--text),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero-text h2{font-size:1.5rem;color:var(--text-secondary);font-weight:400;margin-bottom:2rem}
+        .hero-text p{font-size:1.1rem;color:var(--text-secondary);margin-bottom:2.5rem;max-width:500px}
+        .hero-stats{display:flex;gap:2rem;margin-top:2rem}
+        .stat{text-align:center}
+        .stat-number{font-size:2.5rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
+        .stat-label{color:var(--text-secondary);font-size:.9rem;text-transform:uppercase;letter-spacing:1px}
+        .terminal{background:var(--darker);border-radius:15px;padding:2rem;border:1px solid var(--border);width:100%;max-width:500px;box-shadow:var(--glow);font-family:'Courier New',monospace}
+        .terminal-header{display:flex;gap:10px;margin-bottom:1.5rem}
+        .terminal-dot{width:12px;height:12px;border-radius:50%}
+        .terminal-dot.red{background:var(--danger)}
+        .terminal-dot.yellow{background:var(--warning)}
+        .terminal-dot.green{background:var(--success)}
+        .terminal-content{color:var(--text);font-size:.9rem;line-height:1.8}
+        .terminal-line{margin-bottom:.5rem}
+        .terminal-command{color:var(--secondary)}
+        .terminal-path{color:var(--primary-light)}
+        .categories-nav{padding:3rem 0;background:var(--darker);position:sticky;top:80px;z-index:900;border-bottom:1px solid var(--border)}
+        .categories-container{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+        .category-tab{padding:.8rem 2rem;background:var(--card-bg);border:1px solid var(--border);border-radius:10px;color:var(--text);text-decoration:none;font-weight:600;transition:all .3s ease;display:flex;align-items:center;gap:.8rem;cursor:pointer}
+        .category-tab:hover{transform:translateY(-3px);border-color:var(--primary)}
+        .category-tab.active{background:var(--gradient);border-color:transparent;color:#fff}
+        .category-tab.basic.active{background:linear-gradient(135deg,var(--basic) 0%,#00D4FF 100%)}
+        .category-tab.intermediate.active{background:linear-gradient(135deg,var(--intermediate) 0%,#FF8E53 100%)}
+        .category-tab.advanced.active{background:linear-gradient(135deg,var(--advanced) 0%,#B026FF 100%)}
+        .category-tab.gaming.active{background:linear-gradient(135deg,var(--gaming) 0%,#00FFAA 100%)}
+        .category-tab.workstation.active{background:linear-gradient(135deg,var(--workstation) 0%,#FFAA00 100%)}
+        .scripts{padding:5rem 0}
+        .section-title{text-align:center;font-size:2.5rem;font-weight:700;margin-bottom:3rem;position:relative;display:inline-block;left:50%;transform:translateX(-50%)}
+        .section-title::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:80px;height:4px;background:var(--gradient);border-radius:2px}
+        .category-section{margin-bottom:4rem;padding:2rem;background:var(--darker);border-radius:15px;border:1px solid var(--border);scroll-margin-top:150px}
+        .category-header{display:flex;align-items:center;gap:1rem;margin-bottom:2rem;padding-bottom:1rem;border-bottom:2px solid}
+        .category-header.basic{border-color:var(--basic)}
+        .category-header.intermediate{border-color:var(--intermediate)}
+        .category-header.advanced{border-color:var(--advanced)}
+        .category-header.gaming{border-color:var(--gaming)}
+        .category-header.workstation{border-color:var(--workstation)}
+        .category-icon{font-size:2.5rem}
+        .category-icon.basic{color:var(--basic)}
+        .category-icon.intermediate{color:var(--intermediate)}
+        .category-icon.advanced{color:var(--advanced)}
+        .category-icon.gaming{color:var(--gaming)}
+        .category-icon.workstation{color:var(--workstation)}
+        .category-title{font-size:2rem;font-weight:700;color:var(--text)}
+        .category-description{color:var(--text-secondary);margin-bottom:2rem;font-size:1.1rem}
+        .scripts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:1.5rem}
+        .script-card{background:var(--card-bg);border-radius:12px;padding:1.8rem;border:1px solid var(--border);transition:all .3s ease;position:relative;overflow:hidden}
+        .script-card:hover{transform:translateY(-5px);box-shadow:var(--glow)}
+        .script-card.basic:hover{border-color:var(--basic)}
+        .script-card.intermediate:hover{border-color:var(--intermediate)}
+        .script-card.advanced:hover{border-color:var(--advanced)}
+        .script-card.gaming:hover{border-color:var(--gaming)}
+        .script-card.workstation:hover{border-color:var(--workstation)}
+        .script-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.2rem}
+        .script-type{display:inline-block;padding:.3rem .8rem;border-radius:15px;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+        .script-type.bat{background:rgba(0,120,212,.2);color:var(--basic)}
+        .script-type.ps1{background:rgba(157,78,221,.2);color:var(--advanced)}
+        .script-title{font-size:1.3rem;font-weight:600;color:var(--text);flex-grow:1}
+        .script-description{color:var(--text-secondary);line-height:1.6;margin-bottom:1.5rem;font-size:.95rem}
+        .script-features{list-style:none;margin-bottom:1.5rem}
+        .script-features li{color:var(--text-secondary);margin-bottom:.5rem;padding-left:1.5rem;position:relative;font-size:.9rem}
+        .script-features li::before{content:'▸';position:absolute;left:0;color:var(--secondary)}
+        .script-actions{display:flex;gap:1rem;margin-top:1.5rem}
+        .script-download{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:.8rem;padding:.8rem;background:var(--gradient);color:#fff;text-decoration:none;border-radius:8px;font-weight:600;transition:all .3s ease;border:none;cursor:pointer}
+        .script-download:hover{transform:translateY(-2px);box-shadow:var(--glow)}
+        .script-view{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.8rem 1.5rem;background:transparent;color:var(--primary);text-decoration:none;border-radius:8px;font-weight:600;transition:all .3s ease;border:1px solid var(--primary)}
+        .script-view:hover{background:var(--primary);color:#fff}
+        .instructions{padding:5rem 0;background:var(--darker);text-align:center}
+        .instructions .section-title{display:block;text-align:center;margin-bottom:3rem}
+        .instructions-container{max-width:900px;margin:0 auto;padding:0 20px}
+        .instructions-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin-top:3rem}
+        .instruction-step{background:var(--card-bg);padding:2rem;border-radius:15px;border:1px solid var(--border);text-align:center;transition:all .3s ease}
+        .instruction-step:hover{transform:translateY(-5px);border-color:var(--secondary)}
+        .step-number{width:40px;height:40px;background:var(--gradient);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.2rem;margin:0 auto 1.5rem}
+        .instruction-icon{font-size:2.5rem;color:var(--secondary);margin-bottom:1.5rem;display:block}
+        .instruction-title{font-size:1.3rem;font-weight:600;margin-bottom:1rem;color:var(--text)}
+        .instruction-description{color:var(--text-secondary);line-height:1.6;font-size:.95rem}
+        footer{background:var(--darker);padding:3rem 0;border-top:1px solid var(--border)}
+        .footer-content{text-align:center}
+        .footer-logo{font-size:2rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:10px}
+        .footer-tagline{color:var(--text-secondary);margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
+        .social-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:2rem}
+        .social-link{width:50px;height:50px;border-radius:50%;background:var(--card-bg);display:flex;align-items:center;justify-content:center;color:var(--text);font-size:1.3rem;text-decoration:none;transition:all .3s ease;border:1px solid var(--border)}
+        .social-link:hover{transform:translateY(-5px);box-shadow:var(--glow)}
+        .social-link.github:hover{background:var(--primary)}
+        .social-link.discord:hover{background:var(--discord)}
+        .copyright{color:var(--text-secondary);font-size:.9rem;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border)}
+        @media(max-width:992px){.hero-content{grid-template-columns:1fr;text-align:center}.hero-text h1{font-size:2.8rem}.hero-stats{justify-content:center}.terminal{max-width:100%}.scripts-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}}
+        @media(max-width:768px){.nav-links{display:none}.hero-text h1{font-size:2.2rem}.section-title{font-size:2rem}.scripts-grid{grid-template-columns:1fr}.script-actions{flex-direction:column}.instruction-step{padding:1.5rem}.categories-container{flex-direction:column;align-items:center}.category-tab{width:100%;max-width:300px;justify-content:center}}
+        @media(max-width:480px){.hero-text h1{font-size:1.8rem}.hero-stats{flex-direction:column;gap:1rem}.script-card{padding:1.5rem}.category-section{padding:1.5rem}}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo"><i class="fas fa-bolt logo-icon"></i>KelvenOS Optimizer</a>
+                <ul class="nav-links">
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#scripts">Scripts</a></li>
+                    <li><a href="#instructions">Como Usar</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>KelvenOS Optimizer</h1>
+                    <h2>Scripts de Otimização Windows</h2>
+                    <p>Coleção completa de scripts PowerShell e Batch organizados por níveis de complexidade.</p>
+                    <div class="hero-stats">
+                        <div class="stat"><span class="stat-number">18</span><span class="stat-label">Scripts</span></div>
+                        <div class="stat"><span class="stat-number">5</span><span class="stat-label">Categorias</span></div>
+                        <div class="stat"><span class="stat-number">100%</span><span class="stat-label">Funcional</span></div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <div class="terminal-dot red"></div>
+                            <div class="terminal-dot yellow"></div>
+                            <div class="terminal-dot green"></div>
+                        </div>
+                        <div class="terminal-content">
+                            <div class="terminal-line"><span class="terminal-path">PS C:\KelvenOS\></span> <span class="terminal-command">Get-OptimizationScripts</span></div>
+                            <div class="terminal-line">📁 Encontrando scripts...</div>
+                            <div class="terminal-line">✅ 18 scripts disponíveis</div>
+                            <div class="terminal-line">🎯 Downloads forçados ativos</div>
+                            <div class="terminal-line">⚡ Clique e baixe agora</div>
+                            <div class="terminal-line">✨ Pronto para otimizar!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="categories-nav" id="categories">
+        <div class="container">
+            <div class="categories-container">
+                <a href="#basic" class="category-tab basic active"><i class="fas fa-layer-group"></i><span>Basic</span></a>
+                <a href="#intermediate" class="category-tab intermediate"><i class="fas fa-chart-line"></i><span>Intermediate</span></a>
+                <a href="#advanced" class="category-tab advanced"><i class="fas fa-rocket"></i><span>Advanced</span></a>
+                <a href="#gaming" class="category-tab gaming"><i class="fas fa-gamepad"></i><span>Gaming</span></a>
+                <a href="#workstation" class="category-tab workstation"><i class="fas fa-desktop"></i><span>Workstation</span></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="scripts" id="scripts">
+        <div class="container">
+            <h2 class="section-title">Todos os Scripts</h2>
+
+            <!-- Basic -->
+            <div class="category-section" id="basic">
+                <div class="category-header basic">
+                    <i class="fas fa-layer-group category-icon basic"></i>
+                    <div>
+                        <h3 class="category-title">Basic</h3>
+                        <p class="category-description">Scripts básicos para limpeza e otimização inicial do sistema.</p>
+                    </div>
+                </div>
+                <div class="scripts-grid">
+                    <!-- Limpeza de Sistema -->
+                    <div class="script-card basic">
+                        <div class="script-header">
+                            <h3 class="script-title">Limpeza de Sistema</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Remove arquivos temporários, cache do Windows e limpa a lixeira.</p>
+                        <ul class="script-features">
+                            <li>Limpeza de arquivos temporários</li>
+                            <li>Esvaziamento automático da lixeira</li>
+                            <li>Limpeza de cache do sistema</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/basic/limpeza-de-sistema.bat?raw=true"
+                               class="script-download" download="limpeza-de-sistema.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/basic/limpeza-de-sistema.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Otimização de Rede -->
+                    <div class="script-card basic">
+                        <div class="script-header">
+                            <h3 class="script-title">Otimização de Rede</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Reset de configurações de rede e otimização TCP/IP básica.</p>
+                        <ul class="script-features">
+                            <li>Reset completo do TCP/IP</li>
+                            <li>Flush de DNS e renovação de IP</li>
+                            <li>Otimização de buffers de rede</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/basic/otimizacao-de-rede.bat?raw=true"
+                               class="script-download" download="otimizacao-de-rede.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/basic/otimizacao-de-rede.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- SSD Optimizer -->
+                    <div class="script-card basic">
+                        <div class="script-header">
+                            <h3 class="script-title">SSD Optimizer</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Otimizações específicas para SSDs e desativa recursos desnecessários.</p>
+                        <ul class="script-features">
+                            <li>Desativa desfragmentação automática</li>
+                            <li>Desativa indexação de busca</li>
+                            <li>Configura TRIM automático</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/basic/ssd-optimizer.bat?raw=true"
+                               class="script-download" download="ssd-optimizer.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/basic/ssd-optimizer.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Intermediate -->
+            <div class="category-section" id="intermediate">
+                <div class="category-header intermediate">
+                    <i class="fas fa-chart-line category-icon intermediate"></i>
+                    <div>
+                        <h3 class="category-title">Intermediate</h3>
+                        <p class="category-description">Scripts para otimização de sistema e serviços do Windows.</p>
+                    </div>
+                </div>
+                <div class="scripts-grid">
+                    <!-- Serviços do Windows -->
+                    <div class="script-card intermediate">
+                        <div class="script-header">
+                            <h3 class="script-title">Serviços do Windows</h3>
+                            <span class="script-type ps1">PS1</span>
+                        </div>
+                        <p class="script-description">Desativa serviços desnecessários do Windows para liberar recursos.</p>
+                        <ul class="script-features">
+                            <li>Desativa telemetria e coleta de dados</li>
+                            <li>Desativa serviços de backup desnecessários</li>
+                            <li>Configura serviços para inicialização Manual</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/intermediate/servicos-do-windows.ps1?raw=true"
+                               class="script-download" download="servicos-do-windows.ps1">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/intermediate/servicos-do-windows.ps1"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Inicialização -->
+                    <div class="script-card intermediate">
+                        <div class="script-header">
+                            <h3 class="script-title">Otimização de Inicialização</h3>
+                            <span class="script-type ps1">PS1</span>
+                        </div>
+                        <p class="script-description">Limpa programas da inicialização para boot mais rápido.</p>
+                        <ul class="script-features">
+                            <li>Remove programas desnecessários da inicialização</li>
+                            <li>Otimiza tempo de boot do Windows</li>
+                            <li>Configura atraso de serviços não essenciais</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/intermediate/inicializacao.ps1?raw=true"
+                               class="script-download" download="inicializacao.ps1">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/intermediate/inicializacao.ps1"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Disable Telemetry -->
+                    <div class="script-card intermediate">
+                        <div class="script-header">
+                            <h3 class="script-title">Disable Telemetry</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Desativa completamente a telemetria do Windows 10/11.</p>
+                        <ul class="script-features">
+                            <li>Desativa telemetria do Windows</li>
+                            <li>Bloqueia conexões de telemetria</li>
+                            <li>Remove apps de rastreamento</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/intermediate/disable-telemetry-full.bat?raw=true"
+                               class="script-download" download="disable-telemetry-full.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/intermediate/disable-telemetry-full.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Advanced -->
+            <div class="category-section" id="advanced">
+                <div class="category-header advanced">
+                    <i class="fas fa-rocket category-icon advanced"></i>
+                    <div>
+                        <h3 class="category-title">Advanced</h3>
+                        <p class="category-description">Tweaks avançados de performance extrema para sistemas.</p>
+                    </div>
+                </div>
+                <div class="scripts-grid">
+                    <!-- CPU Extrema -->
+                    <div class="script-card advanced">
+                        <div class="script-header">
+                            <h3 class="script-title">CPU Extrema</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Power plan extremo e desativação de C-states para máximo desempenho.</p>
+                        <ul class="script-features">
+                            <li>Power plan de alto desempenho otimizado</li>
+                            <li>Desativa C-states para latency mínima</li>
+                            <li>Configuração de CPU para performance máxima</li>
+                            <li>Otimização de gerenciamento de energia</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/advanced/cpu-extrema.bat?raw=true"
+                               class="script-download" download="cpu-extrema.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/advanced/cpu-extrema.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- RAM Extrema -->
+                    <div class="script-card advanced">
+                        <div class="script-header">
+                            <h3 class="script-title">RAM Extrema</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Desativa memory compression e otimiza uso de RAM.</p>
+                        <ul class="script-features">
+                            <li>Desativa memory compression do Windows</li>
+                            <li>Otimiza configurações de paginação</li>
+                            <li>Configura prioridade de processos na RAM</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/advanced/ram-extrema.bat?raw=true"
+                               class="script-download" download="ram-extrema.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/advanced/ram-extrema.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- MSI Mode -->
+                    <div class="script-card advanced">
+                        <div class="script-header">
+                            <h3 class="script-title">MSI Mode</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Ativa MSI (Message Signaled Interrupts) para GPU e dispositivos.</p>
+                        <ul class="script-features">
+                            <li>Ativa MSI para GPU NVIDIA/AMD</li>
+                            <li>Configura interrupções otimizadas</li>
+                            <li>Redução de latency de GPU</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/advanced/msi-mode.bat?raw=true"
+                               class="script-download" download="msi-mode.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/advanced/msi-mode.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Timer Resolution -->
+                    <div class="script-card advanced">
+                        <div class="script-header">
+                            <h3 class="script-title">Timer Resolution</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Configura timer do sistema para 0.5ms (máxima precisão).</p>
+                        <ul class="script-features">
+                            <li>Configura timer do sistema para 0.5ms</li>
+                            <li>Maior precisão em jogos e aplicações</li>
+                            <li>Redução de input lag</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/advanced/timer-resolution.bat?raw=true"
+                               class="script-download" download="timer-resolution.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/advanced/timer-resolution.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- HPET Disable -->
+                    <div class="script-card advanced">
+                        <div class="script-header">
+                            <h3 class="script-title">HPET Disable</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Desativa HPET (High Precision Event Timer) para menor latency.</p>
+                        <ul class="script-features">
+                            <li>Desativa HPET no sistema</li>
+                            <li>Redução de latency do sistema</li>
+                            <li>Otimização para CPUs modernas</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/advanced/hpet-disable.bat?raw=true"
+                               class="script-download" download="hpet-disable.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/advanced/hpet-disable.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Ultimate Mode -->
+                    <div class="script-card advanced">
+                        <div class="script-header">
+                            <h3 class="script-title">Ultimate Mode</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Combinação de TODOS os tweaks avançados em um único script.</p>
+                        <ul class="script-features">
+                            <li>CPU Extrema + RAM Extrema</li>
+                            <li>MSI Mode + Timer Resolution</li>
+                            <li>HPET Disable + Otimizações extras</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/advanced/ultimate-mode.bat?raw=true"
+                               class="script-download" download="ultimate-mode.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/advanced/ultimate-mode.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gaming -->
+            <div class="category-section" id="gaming">
+                <div class="category-header gaming">
+                    <i class="fas fa-gamepad category-icon gaming"></i>
+                    <div>
+                        <h3 class="category-title">Gaming</h3>
+                        <p class="category-description">Otimizações específicas para jogos e performance em gaming.</p>
+                    </div>
+                </div>
+                <div class="scripts-grid">
+                    <!-- KelvenOptimizer -->
+                    <div class="script-card gaming">
+                        <div class="script-header">
+                            <h3 class="script-title">KelvenOptimizer</h3>
+                            <span class="script-type ps1">PS1</span>
+                        </div>
+                        <p class="script-description">Painel principal tudo-em-um com todas as otimizações de gaming.</p>
+                        <ul class="script-features">
+                            <li>Interface gráfica para todas as otimizações</li>
+                            <li>Modos pré-configurados para diferentes jogos</li>
+                            <li>Otimizações automáticas baseadas no hardware</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/gaming/KelvenOptimizer.ps1?raw=true"
+                               class="script-download" download="KelvenOptimizer.ps1">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/gaming/KelvenOptimizer.ps1"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Valorant Mode -->
+                    <div class="script-card gaming">
+                        <div class="script-header">
+                            <h3 class="script-title">Valorant Mode</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Otimizações específicas para Valorant: Timer + MSI + TCP.</p>
+                        <ul class="script-features">
+                            <li>Timer 0.5ms para mínimo input lag</li>
+                            <li>MSI ativado para GPU</li>
+                            <li>TCP optimizations para jogos online</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/gaming/valorant-mode.bat?raw=true"
+                               class="script-download" download="valorant-mode.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/gaming/valorant-mode.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- CS2 Optimization -->
+                    <div class="script-card gaming">
+                        <div class="script-header">
+                            <h3 class="script-title">CS2 Optimization</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">GameDVR off + TCP tweaks para Counter-Strike 2.</p>
+                        <ul class="script-features">
+                            <li>Desativa GameDVR e Game Bar</li>
+                            <li>TCP optimizations para CS2</li>
+                            <li>Otimizações de GPU para Source 2</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/gaming/cs2-optimization.bat?raw=true"
+                               class="script-download" download="cs2-optimization.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/gaming/cs2-optimization.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Anti-Cheat Optimizer -->
+                    <div class="script-card gaming">
+                        <div class="script-header">
+                            <h3 class="script-title">Anti-Cheat Optimizer</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Otimizações seguras que não quebram anti-cheats.</p>
+                        <ul class="script-features">
+                            <li>Otimizações seguras para jogos com anti-cheat</li>
+                            <li>Configurações compatíveis com Vanguard, Faceit</li>
+                            <li>Performance sem risco de ban</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/gaming/anticheat-optimizer.bat?raw=true"
+                               class="script-download" download="anticheat-optimizer.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/gaming/anticheat-optimizer.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workstation -->
+            <div class="category-section" id="workstation">
+                <div class="category-header workstation">
+                    <i class="fas fa-desktop category-icon workstation"></i>
+                    <div>
+                        <h3 class="category-title">Workstation</h3>
+                        <p class="category-description">Otimizações para softwares profissionais e workstations.</p>
+                    </div>
+                </div>
+                <div class="scripts-grid">
+                    <!-- Premiere Optimizer -->
+                    <div class="script-card workstation">
+                        <div class="script-header">
+                            <h3 class="script-title">Premiere Optimizer</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Otimizações de cache e RAM para Adobe Premiere Pro.</p>
+                        <ul class="script-features">
+                            <li>Otimização de cache do Premiere Pro</li>
+                            <li>Configuração de RAM para renderização</li>
+                            <li>Otimizações de GPU para Mercury Playback</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/workstation/premiere-optimizer.bat?raw=true"
+                               class="script-download" download="premiere-optimizer.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/workstation/premiere-optimizer.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- After Effects Mode -->
+                    <div class="script-card workstation">
+                        <div class="script-header">
+                            <h3 class="script-title">After Effects Mode</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Otimizações de preview e render para Adobe After Effects.</p>
+                        <ul class="script-features">
+                            <li>Otimização de preview em tempo real</li>
+                            <li>Configuração de RAM para composições</li>
+                            <li>Otimizações de cache de disco para AE</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/workstation/after-effects-mode.bat?raw=true"
+                               class="script-download" download="after-effects-mode.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/workstation/after-effects-mode.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Blender Optimizer -->
+                    <div class="script-card workstation">
+                        <div class="script-header">
+                            <h3 class="script-title">Blender Optimizer</h3>
+                            <span class="script-type bat">BAT</span>
+                        </div>
+                        <p class="script-description">Otimizações para Cycles e Eevee no Blender.</p>
+                        <ul class="script-features">
+                            <li>Otimizações para renderizador Cycles</li>
+                            <li>Performance em viewport com Eevee</li>
+                            <li>Configurações de GPU para CUDA/OpenCL</li>
+                        </ul>
+                        <div class="script-actions">
+                            <a href="https://raw.githubusercontent.com/kelvenapk/site-kelven-optimizer/main/scripts/workstation/blender-optimizer.bat?raw=true"
+                               class="script-download" download="blender-optimizer.bat">
+                                <i class="fas fa-download"></i>Baixar
+                            </a>
+                            <a href="https://github.com/kelvenapk/site-kelven-optimizer/blob/main/scripts/workstation/blender-optimizer.bat"
+                               class="script-view" target="_blank">
+                                <i class="fab fa-github"></i>Ver Código
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="instructions" id="instructions">
+        <div class="container">
+            <div class="instructions-container">
+                <h2 class="section-title">Como Usar os Scripts</h2>
+                <div class="instructions-grid">
+                    <div class="instruction-step">
+                        <div class="step-number">1</div>
+                        <i class="fas fa-download instruction-icon"></i>
+                        <h3 class="instruction-title">Baixar</h3>
+                        <p class="instruction-description">Clique no botão "Baixar" do script desejado.</p>
+                    </div>
+                    <div class="instruction-step">
+                        <div class="step-number">2</div>
+                        <i class="fas fa-shield-alt instruction-icon"></i>
+                        <h3 class="instruction-title">Executar como Admin</h3>
+                        <p class="instruction-description">Clique com botão direito no arquivo e selecione "Executar como administrador".</p>
+                    </div>
+                    <div class="instruction-step">
+                        <div class="step-number">3</div>
+                        <i class="fas fa-terminal instruction-icon"></i>
+                        <h3 class="instruction-title">Permissão PowerShell</h3>
+                        <p class="instruction-description">Para scripts .ps1, execute no PowerShell: <code>Set-ExecutionPolicy Bypass</code></p>
+                    </div>
+                    <div class="instruction-step">
+                        <div class="step-number">4</div>
+                        <i class="fas fa-sync-alt instruction-icon"></i>
+                        <h3 class="instruction-title">Reiniciar</h3>
+                        <p class="instruction-description">Reinicie o Windows para aplicar todas as mudanças.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo"><i class="fas fa-bolt"></i>KelvenOS Optimizer</div>
+                <p class="footer-tagline">
+                    Coleção de 18 scripts PowerShell e Batch para otimização Windows.<br>
+                    Organizado por níveis: Basic, Intermediate, Advanced, Gaming e Workstation.
+                </p>
+                <div class="social-links">
+                    <a href="https://github.com/kelvenapk" class="social-link github" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://discord.gg/vqRrPT8aQx" class="social-link discord" target="_blank"><i class="fab fa-discord"></i></a>
+                </div>
+                <p class="copyright">
+                    © 2025 KelvenOS Optimizer<br>
+                    Desenvolvido por Kelven
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 🔽 SCRIPT DE DOWNLOAD FORÇADO -->
+    <script>
+        // Forçar download real ao clicar em qualquer botão "Baixar"
+        document.addEventListener('click', function (e) {
+            const link = e.target.closest('.script-download');
+            if (!link) return;
+
+            e.preventDefault(); // impede abrir no navegador
+
+            const url = link.href;
+            const filename = link.getAttribute('download') || 'script.bat';
+
+            fetch(url)
+                .then(res => res.blob())
+                .then(blob => {
+                    const a = document.createElement('a');
+                    a.href = URL.createObjectURL(blob);
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(a.href);
+                })
+                .catch(() => {
+                    // fallback: abrir em nova aba se falhar
+                    window.open(url, '_blank');
+                });
+        });
+    </script>
+
+    <!-- Scripts de animação e navegação -->
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Category tabs functionality
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 150,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(10, 10, 15, 0.98)';
+                header.style.backdropFilter = 'blur(15px)';
+            } else {
+                header.style.background = 'rgba(10, 10, 15, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            }
+        });
+
+        // Terminal animation
+        const terminalLines = document.querySelectorAll('.terminal-line');
+        terminalLines.forEach((line, index) => {
+            line.style.opacity = '0';
+            line.style.animation = `fadeIn 0.5s ease forwards ${index * 0.3}s`;
+        });
+
+        // Add animation style
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Script cards animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.script-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Auto-select category on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('.category-section');
+            const navLinks = document.querySelectorAll('.category-tab');
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 200;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
