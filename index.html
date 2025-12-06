@@ -117,6 +117,7 @@
         @media(max-width:768px){.hero-text h1{font-size:2.2rem}.section-title{font-size:2rem}.scripts-grid{grid-template-columns:1fr}.script-actions{flex-direction:column}}
     </style>
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
     <header>
@@ -380,23 +381,46 @@
             `;
         }
 
-        // Função para forçar download direto
+        // Função para forçar download direto (CORRIGIDA - SEM CTRL+L)
         function forceDownload(url, filename) {
-            // Cria elemento de download temporário
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = filename;
-            link.target = '_blank';
-            link.rel = 'noopener noreferrer';
-            link.style.display = 'none';
-            
-            // Força o download
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Feedback visual
-            showDownloadFeedback(filename);
+            // Usa fetch para baixar o arquivo como blob e forçar download
+            fetch(url)
+                .then(response => response.blob())
+                .then(blob => {
+                    // Cria URL temporária do blob
+                    const blobUrl = window.URL.createObjectURL(blob);
+                    
+                    // Cria link de download
+                    const link = document.createElement('a');
+                    link.href = blobUrl;
+                    link.download = filename;
+                    link.style.display = 'none';
+                    
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    // Limpa URL temporária após um tempo
+                    setTimeout(() => window.URL.revokeObjectURL(blobUrl), 100);
+                    
+                    // Feedback visual
+                    showDownloadFeedback(filename);
+                })
+                .catch(error => {
+                    console.error('Erro ao baixar arquivo:', error);
+                    
+                    // Fallback - método tradicional como backup
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = filename;
+                    link.style.display = 'none';
+                    
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    showDownloadFeedback(filename);
+                });
         }
 
         // Função para mostrar feedback de download
