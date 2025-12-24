@@ -9,11 +9,54 @@
     <meta name="keywords" content="windows optimizer, otimização windows, scripts powershell, performance windows, gaming optimizer, kelvenos">
     <meta name="author" content="KelvenOS Optimizer">
     <meta name="theme-color" content="#8b00ff">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Portuguese">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kelvenos.netlify.app/">
+    <meta property="og:title" content="KelvenOS Optimizer | Otimização Windows Completa">
+    <meta property="og:description" content="Scripts PowerShell e Batch profissionais para otimização Windows. Maximize performance, reduza latência e melhore sua experiência de jogo.">
+    <meta property="og:image" content="https://github.com/kelven-optimizer/kelvenoptimizer/blob/7848345f64f7bbe49e3357a73d74300a8ac1ab82/imagens/kelvenos.png?raw=true">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://kelvenos.netlify.app/">
+    <meta property="twitter:title" content="KelvenOS Optimizer | Otimização Windows Completa">
+    <meta property="twitter:description" content="Scripts PowerShell e Batch profissionais para otimização Windows. Maximize performance, reduza latência e melhore sua experiência de jogo.">
+    <meta property="twitter:image" content="https://github.com/kelven-optimizer/kelvenoptimizer/blob/7848345f64f7bbe49e3357a73d74300a8ac1ab82/imagens/kelvenos.png?raw=true">
+
+    <!-- Preconnect para performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://raw.githubusercontent.com">
+    <link rel="dns-prefetch" href="https://github.com">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        /* Otimizações de performance */
+        img {
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Prevenção de layout shift */
+        .logo-img {
+            aspect-ratio: 1 / 1;
+        }
+
+        /* Otimização de fontes - font-display já configurado no @import */
+
+        /* Reduzir repaints */
+        .fade-in-up,
+        .script-card,
+        .feature-card,
+        .product-card {
+            contain: layout style paint;
+        }
 
         * {
             margin: 0;
@@ -41,12 +84,15 @@
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
             position: relative;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
         /* Animated Background */
@@ -1579,36 +1625,73 @@
         }
     </style>
     <base target="_blank">
-    <base target="_blank">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "KelvenOS Optimizer",
+            "applicationCategory": "UtilityApplication",
+            "operatingSystem": "Windows",
+            "description": "Scripts PowerShell e Batch profissionais para otimização Windows. Maximize performance, reduza latência e melhore sua experiência de jogo.",
+            "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD"
+            },
+            "author": {
+                "@type": "Organization",
+                "name": "KelvenOS Optimizer"
+            },
+            "license": "https://opensource.org/licenses/MIT"
+        }
+    </script>
 </head>
 
 <body>
     <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
+    <div class="loading-overlay" id="loadingOverlay" role="status" aria-label="Carregando página">
+        <div class="loading-spinner" aria-hidden="true"></div>
+        <span class="sr-only">Carregando KelvenOS Optimizer...</span>
     </div>
 
+    <!-- Screen Reader Only -->
+    <style>
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+    </style>
+
     <!-- Navigation -->
-    <nav id="navbar">
+    <nav id="navbar" role="navigation" aria-label="Navegação principal">
         <div class="nav-container">
             <div class="logo-container">
-                <img src="https://github.com/kelven-optimizer/kelvenoptimizer/blob/7848345f64f7bbe49e3357a73d74300a8ac1ab82/imagens/kelvenos.png?raw=true" alt="KelvenOS Logo" class="logo-img" loading="eager" width="45" height="45">
+                <img src="https://github.com/kelven-optimizer/kelvenoptimizer/blob/7848345f64f7bbe49e3357a73d74300a8ac1ab82/imagens/kelvenos.png?raw=true" alt="KelvenOS Logo" class="logo-img" loading="eager" width="45" height="45" decoding="async">
                 <div class="logo-text">KelvenOS</div>
             </div>
-            <ul class="nav-links">
-                <li><a href="#home">Início</a></li>
-                <li><a href="#features">Recursos</a></li>
-                <li><a href="#coming-soon">Em Breve</a></li>
-                <li><a href="#scripts">Scripts</a></li>
-                <li><a href="#changelog">Changelog</a></li>
-                <li><a href="#docs">Documentação</a></li>
-                <li><a href="#faq">FAQ</a></li>
-                <li><a href="#community">Comunidade</a></li>
+            <ul class="nav-links" role="menubar">
+                <li role="none"><a href="#home" role="menuitem">Início</a></li>
+                <li role="none"><a href="#features" role="menuitem">Recursos</a></li>
+                <li role="none"><a href="#coming-soon" role="menuitem">Em Breve</a></li>
+                <li role="none"><a href="#scripts" role="menuitem">Scripts</a></li>
+                <li role="none"><a href="#changelog" role="menuitem">Changelog</a></li>
+                <li role="none"><a href="#docs" role="menuitem">Documentação</a></li>
+                <li role="none"><a href="#faq" role="menuitem">FAQ</a></li>
+                <li role="none"><a href="#community" role="menuitem">Comunidade</a></li>
             </ul>
-            <button class="mobile-menu-toggle" aria-label="Menu de navegação" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
+            <button class="mobile-menu-toggle" aria-label="Menu de navegação" aria-expanded="false" aria-controls="nav-links">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
             </button>
         </div>
     </nav>
@@ -1775,7 +1858,7 @@
                         <span class="tag">Status</span>
                         <span class="tag">Interface</span>
                     </div>
-                    <button onclick="downloadScript('scripts/utilities/performance-monitor.ps1')" class="download-btn">
+                    <button onclick="downloadScript('scripts/utilities/performance-monitor.ps1')" class="download-btn" aria-label="Baixar script Monitor de Performance">
                         Baixar Script
                     </button>
                 </div>
@@ -2270,87 +2353,97 @@
         // ============================================
         // DOWNLOAD DIRETO E FORÇADO
         // ============================================
+        /**
+         * Função otimizada para download direto de scripts
+         * Força download automático sem precisar salvar manualmente
+         */
         function downloadScript(scriptPath) {
-            try {
-                const fileName = scriptPath.split('/').pop();
-                const downloadUrl = `https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/${scriptPath}`;
-
-                // Usa fetch para baixar o arquivo e forçar download automático
-                fetch(downloadUrl, {
-                        method: 'GET',
-                        headers: {
-                            'Accept': 'application/octet-stream'
-                        }
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Erro ao baixar arquivo');
-                        }
-                        return response.blob();
-                    })
-                    .then(blob => {
-                        // Cria URL temporária do blob
-                        const blobUrl = window.URL.createObjectURL(blob);
-
-                        // Cria link temporário para forçar download
-                        const downloadLink = document.createElement('a');
-                        downloadLink.href = blobUrl;
-                        downloadLink.download = fileName;
-                        downloadLink.style.display = 'none';
-                        downloadLink.setAttribute('download', fileName); // Força download
-
-                        // Adiciona ao DOM
-                        document.body.appendChild(downloadLink);
-
-                        // Força o clique programático
-                        const clickEvent = new MouseEvent('click', {
-                            view: window,
-                            bubbles: true,
-                            cancelable: true
-                        });
-                        downloadLink.dispatchEvent(clickEvent);
-
-                        // Também tenta click() direto como fallback
-                        downloadLink.click();
-
-                        // Limpa após download (com delay maior para garantir)
-                        setTimeout(() => {
-                            if (downloadLink.parentNode) {
-                                document.body.removeChild(downloadLink);
-                            }
-                            window.URL.revokeObjectURL(blobUrl);
-                        }, 200);
-
-                        // Feedback visual
-                        console.log(`✅ Download automático iniciado: ${fileName}`);
-                    })
-                    .catch(error => {
-                        console.error('❌ Erro no download:', error);
-                        // Fallback alternativo: usa iframe para forçar download
-                        try {
-                            const iframe = document.createElement('iframe');
-                            iframe.style.display = 'none';
-                            iframe.src = downloadUrl;
-                            document.body.appendChild(iframe);
-
-                            setTimeout(() => {
-                                document.body.removeChild(iframe);
-                            }, 2000);
-
-                            // Último fallback: abre em nova aba
-                            setTimeout(() => {
-                                window.open(downloadUrl, '_blank');
-                            }, 500);
-                        } catch (fallbackError) {
-                            console.error('Erro no fallback:', fallbackError);
-                            alert(`Erro ao baixar ${fileName}. Por favor, tente novamente.`);
-                        }
-                    });
-
-            } catch (error) {
-                console.error('❌ Erro no download:', error);
-                alert(`Erro ao baixar ${scriptPath}. Por favor, tente novamente.`);
+            // Validação de entrada
+            if (!scriptPath || typeof scriptPath !== 'string') {
+                console.error('❌ Caminho do script inválido');
+                return;
             }
+
+            const fileName = scriptPath.split('/').pop();
+            const downloadUrl = `https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/${scriptPath}`;
+
+            // Feedback visual imediato
+            const button = document.querySelector(`button[onclick*="${scriptPath.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}"]`);
+            if (button) {
+                const originalText = button.textContent;
+                button.textContent = 'Baixando...';
+                button.disabled = true;
+
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 2000);
+            }
+
+            // Usa fetch para baixar o arquivo e forçar download automático
+            fetch(downloadUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/octet-stream'
+                    },
+                    cache: 'no-cache'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+                    return response.blob();
+                })
+                .then(blob => {
+                    // Valida se o blob não está vazio
+                    if (blob.size === 0) {
+                        throw new Error('Arquivo vazio ou não encontrado');
+                    }
+
+                    // Cria URL temporária do blob
+                    const blobUrl = window.URL.createObjectURL(blob);
+
+                    // Cria link temporário para forçar download
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = blobUrl;
+                    downloadLink.download = fileName;
+                    downloadLink.style.display = 'none';
+                    downloadLink.setAttribute('download', fileName);
+                    downloadLink.setAttribute('aria-label', `Download de ${fileName}`);
+
+                    // Adiciona ao DOM
+                    document.body.appendChild(downloadLink);
+
+                    // Força o clique programático
+                    downloadLink.click();
+
+                    // Limpa após download
+                    setTimeout(() => {
+                        if (downloadLink.parentNode) {
+                            document.body.removeChild(downloadLink);
+                        }
+                        window.URL.revokeObjectURL(blobUrl);
+                    }, 200);
+
+                    // Feedback de sucesso
+                    console.log(`✅ Download iniciado: ${fileName} (${(blob.size / 1024).toFixed(2)} KB)`);
+                })
+                .catch(error => {
+                    console.error('❌ Erro no download:', error);
+
+                    // Fallback: tenta download direto via link
+                    const fallbackLink = document.createElement('a');
+                    fallbackLink.href = downloadUrl;
+                    fallbackLink.download = fileName;
+                    fallbackLink.target = '_blank';
+                    fallbackLink.style.display = 'none';
+                    document.body.appendChild(fallbackLink);
+                    fallbackLink.click();
+                    setTimeout(() => document.body.removeChild(fallbackLink), 100);
+
+                    // Notifica o usuário
+                    console.warn(`⚠️ Usando método alternativo para ${fileName}`);
+                });
         }
 
         // ============================================
@@ -2558,18 +2651,15 @@
                     return;
                 }
 
-                // Remove loading screen
+                // Inicia animações e countdown
                 setTimeout(() => {
-                    const overlay = document.getElementById('loadingOverlay');
-                    if (overlay) {
-                        overlay.style.opacity = '0';
-                        setTimeout(() => overlay.remove(), CONFIG.FADE_DURATION);
+                    if (typeof Animations !== 'undefined' && Animations.start) {
+                        Animations.start();
                     }
-
-                    // Inicia animações e countdown
-                    Animations.start();
-                    CountdownTimer.start();
-                }, CONFIG.ANIMATION_DELAY);
+                    if (typeof CountdownTimer !== 'undefined' && CountdownTimer.start) {
+                        CountdownTimer.start();
+                    }
+                }, 100);
 
                 // Configura navegação
                 Navigation.initSmoothScroll();
@@ -2591,7 +2681,39 @@
         // ============================================
         // INICIA A APLICAÇÃO
         // ============================================
-        App.init();
+        // Função para remover loading screen
+        function removeLoadingScreen() {
+            const overlay = document.getElementById('loadingOverlay');
+            if (overlay) {
+                overlay.style.opacity = '0';
+                overlay.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    overlay.remove();
+                }, 500);
+            }
+        }
+
+        // Inicializa quando DOM estiver pronto
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(() => {
+                    removeLoadingScreen();
+                    App.init();
+                }, 500);
+            });
+        } else {
+            // DOM já está pronto
+            setTimeout(() => {
+                removeLoadingScreen();
+                App.init();
+            }, 500);
+        }
+
+        // Fallback de segurança: remove loading após 2 segundos máximo
+        setTimeout(() => {
+            removeLoadingScreen();
+        }, 2000);
     </script>
 </body>
 
