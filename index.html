@@ -1,583 +1,2524 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KelvenOS Optimizer | Todos os Scripts</title>
-    <meta name="referrer" content="no-referrer">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>KelvenOS Optimizer | Edição Dark - Otimização Windows Completa</title>
+    <meta name="description" content="KelvenOS Optimizer - Scripts PowerShell e Batch profissionais para otimização Windows. Maximize performance, reduza latência e melhore sua experiência de jogo.">
+    <meta name="keywords" content="windows optimizer, otimização windows, scripts powershell, performance windows, gaming optimizer, kelvenos">
+    <meta name="author" content="KelvenOS Optimizer">
+    <meta name="theme-color" content="#8b00ff">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
-            --primary: #8A2BE2;
-            --primary-dark: #6A0DAD;
-            --primary-light: #9D4EDD;
-            --secondary: #00D4AA;
-            --discord: #7289DA;
-            --dark: #0A0A0F;
-            --darker: #050508;
-            --card-bg: #121218;
-            --text: #FFFFFF;
-            --text-secondary: #A0A0B0;
-            --border: #2A2A35;
-            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            --glow: 0 0 20px rgba(138, 43, 226, 0.3);
-            --success: #00C851;
-            --warning: #ffbb33;
-            --danger: #ff4444;
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #0f0f0f;
+            --bg-card: rgba(15, 15, 15, 0.8);
+            --purple-primary: #8b00ff;
+            --purple-secondary: #6a00c0;
+            --purple-accent: #a855f7;
+            --purple-glow: #c084fc;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border-color: rgba(139, 0, 255, 0.2);
+            --gradient-purple: linear-gradient(135deg, #8b00ff 0%, #6a00c0 100%);
+            --gradient-glow: linear-gradient(135deg, #8b00ff 0%, #c084fc 50%, #a855f7 100%);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
         }
 
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--text);line-height:1.6;overflow-x:hidden}
-        .container{width:90%;max-width:1200px;margin:0 auto;padding:0 20px}
-        
-        header{position:fixed;top:0;width:100%;background:rgba(10,10,15,.95);backdrop-filter:blur(10px);z-index:1000;border-bottom:1px solid var(--border);padding:20px 0}
-        nav{display:flex;justify-content:space-between;align-items:center}
-        .logo{font-size:1.8rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-decoration:none;display:flex;align-items:center;gap:10px}
-
-        .hero{min-height:100vh;display:flex;align-items:center;padding-top:100px;background:radial-gradient(circle at 20% 50%,rgba(138,43,226,.15) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(0,212,170,.1) 0%,transparent 50%)}
-        .hero-content{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
-        .hero-text h1{font-size:3.5rem;font-weight:800;line-height:1.2;margin-bottom:1.5rem;background:linear-gradient(to right,var(--text),var(--primary-light));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-        .hero-text h2{font-size:1.5rem;color:var(--text-secondary);font-weight:400;margin-bottom:2rem}
-        .hero-text p{font-size:1.1rem;color:var(--text-secondary);margin-bottom:2.5rem;max-width:500px}
-        
-        .hero-stats{display:flex;gap:2rem;margin-top:2rem}
-        .stat{text-align:center}
-        .stat-number{font-size:2.5rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
-        .stat-label{color:var(--text-secondary);font-size:.9rem;text-transform:uppercase;letter-spacing:1px}
-
-        .terminal{background:var(--darker);border-radius:15px;padding:2rem;border:1px solid var(--border);width:100%;max-width:500px;box-shadow:var(--glow);font-family:'Courier New',monospace}
-        .terminal-header{display:flex;gap:10px;margin-bottom:1.5rem}
-        .terminal-dot{width:12px;height:12px;border-radius:50%}
-        .terminal-dot.red{background:var(--danger)}
-        .terminal-dot.yellow{background:var(--warning)}
-        .terminal-dot.green{background:var(--success)}
-        .terminal-content{color:var(--text);font-size:.9rem;line-height:1.8}
-        .terminal-line{margin-bottom:.5rem}
-        .terminal-command{color:var(--secondary)}
-        .terminal-path{color:var(--primary-light)}
-
-        .stats-bar{background:var(--darker);padding:3rem 0;text-align:center;border-bottom:1px solid var(--border)}
-        .stats{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap}
-        
-        .scripts{padding:5rem 0}
-        .section-title{text-align:center;font-size:2.5rem;font-weight:700;margin-bottom:3rem;position:relative;display:inline-block;left:50%;transform:translateX(-50%)}
-        .section-title::after{content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:80px;height:4px;background:var(--gradient);border-radius:2px}
-        
-        .warning-box{background:rgba(255,187,51,.1);border:1px solid var(--warning);border-radius:8px;padding:1rem;margin:2rem 0;text-align:center}
-        .warning-box i{color:var(--warning);margin-right:.5rem}
-        
-        .scripts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(350px,1fr));gap:1.5rem;margin-top:2rem}
-        .script-card{background:var(--card-bg);border-radius:12px;padding:1.8rem;border:1px solid var(--border);transition:all .3s ease;position:relative;overflow:hidden}
-        .script-card:hover{transform:translateY(-5px);box-shadow:var(--glow);border-color:var(--primary)}
-        
-        .script-header{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.2rem}
-        .script-type{display:inline-block;padding:.3rem .8rem;border-radius:15px;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-        .script-type.bat{background:rgba(0,120,212,.2);color:#0078D4}
-        .script-type.ps1{background:rgba(157,78,221,.2);color:var(--primary-light)}
-        .script-type.reg{background:rgba(255,187,51,.2);color:var(--warning)}
-        
-        .script-title{font-size:1.3rem;font-weight:600;color:var(--text);flex-grow:1}
-        .script-description{color:var(--text-secondary);line-height:1.6;margin-bottom:1.5rem;font-size:.95rem}
-        .script-features{list-style:none;margin-bottom:1.5rem}
-        .script-features li{color:var(--text-secondary);margin-bottom:.5rem;padding-left:1.5rem;position:relative;font-size:.9rem}
-        .script-features li::before{content:'▸';position:absolute;left:0;color:var(--secondary)}
-        
-        .script-actions{display:flex;gap:1rem;margin-top:1.5rem}
-        .script-download{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:.8rem;padding:.8rem;background:var(--gradient);color:#fff;text-decoration:none;border-radius:8px;font-weight:600;transition:all .3s ease;border:none;cursor:pointer}
-        .script-download:hover{transform:translateY(-2px);box-shadow:var(--glow)}
-        .script-view{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.8rem 1.5rem;background:transparent;color:var(--primary);text-decoration:none;border-radius:8px;font-weight:600;transition:all .3s ease;border:1px solid var(--primary)}
-        .script-view:hover{background:var(--primary);color:#fff}
-        
-        .loading{text-align:center;padding:3rem;color:var(--text-secondary)}
-        .loading i{font-size:2rem;margin-bottom:1rem;animation:spin 1s linear infinite}
-        @keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
-        
-        footer{background:var(--darker);padding:3rem 0;border-top:1px solid var(--border)}
-        .footer-content{text-align:center}
-        .footer-logo{font-size:2rem;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1rem;display:flex;align-items:center;justify-content:center;gap:10px}
-        .footer-tagline{color:var(--text-secondary);margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
-        .social-links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:2rem}
-        .social-link{width:50px;height:50px;border-radius:50%;background:var(--card-bg);display:flex;align-items:center;justify-content:center;color:var(--text);font-size:1.3rem;text-decoration:none;transition:all .3s ease;border:1px solid var(--border)}
-        .social-link:hover{transform:translateY(-5px);box-shadow:var(--glow)}
-        .copyright{color:var(--text-secondary);font-size:.9rem;margin-top:2rem;padding-top:2rem;border-top:1px solid var(--border)}
-        
-        /* Animações de feedback */
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
         }
-        @keyframes slideOut {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(139, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(192, 132, 252, 0.05) 0%, transparent 50%);
+            animation: backgroundPulse 8s ease-in-out infinite;
+            z-index: -1;
+            will-change: opacity;
         }
-        
-        @media(max-width:992px){.hero-content{grid-template-columns:1fr;text-align:center}.hero-text h1{font-size:2.8rem}.hero-stats{justify-content:center}.terminal{max-width:100%}.scripts-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}}
-        @media(max-width:768px){.hero-text h1{font-size:2.2rem}.section-title{font-size:2rem}.scripts-grid{grid-template-columns:1fr}.script-actions{flex-direction:column}}
+
+        @keyframes backgroundPulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--purple-accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 15, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(15, 15, 15, 0.9);
+            box-shadow: 0 10px 30px rgba(139, 0, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--purple-accent);
+            box-shadow: 0 0 25px rgba(139, 0, 255, 0.6);
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 15px rgba(139, 0, 255, 0.8));
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-5px) scale(1.05);
+            }
+        }
+
+        .logo-img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 40px rgba(139, 0, 255, 1);
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-glow);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: logoGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+
+            0%,
+            100% {
+                filter: brightness(1);
+            }
+
+            50% {
+                filter: brightness(1.3);
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-purple);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--purple-accent);
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            outline: none;
+        }
+
+        .mobile-menu-toggle:focus {
+            outline: 2px solid var(--purple-accent);
+            outline-offset: 2px;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-primary);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        .nav-links.active {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(15, 15, 15, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 7vw, 5.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-glow);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShimmer 4s ease-in-out infinite;
+            line-height: 1.1;
+        }
+
+        @keyframes textShimmer {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .hero .subtitle {
+            font-size: 1.4rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-glow);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        .hero-stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        /* Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 3rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--gradient-purple);
+            color: white;
+            box-shadow: 0 10px 30px rgba(139, 0, 255, 0.3);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(139, 0, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--purple-accent);
+            border: 2px solid var(--purple-accent);
+            position: relative;
+        }
+
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--purple-accent);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn-secondary:hover::before {
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            color: var(--bg-primary);
+            transform: translateY(-3px);
+        }
+
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 4rem;
+            background: var(--gradient-glow);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--gradient-purple);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-purple);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--purple-accent);
+            box-shadow: 0 25px 50px rgba(139, 0, 255, 0.2);
+        }
+
+        .feature-icon {
+            width: 4rem;
+            height: 4rem;
+            background: var(--gradient-purple);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            box-shadow: 0 10px 30px rgba(139, 0, 255, 0.3);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Coming Soon Section */
+        .coming-soon {
+            padding: 8rem 2rem;
+            background: linear-gradient(135deg, rgba(139, 0, 255, 0.1) 0%, rgba(15, 15, 15, 0.9) 100%);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .coming-soon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(139, 0, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .coming-soon-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .coming-soon-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-glow);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+
+            0%,
+            100% {
+                filter: brightness(1) drop-shadow(0 0 20px rgba(139, 0, 255, 0.5));
+            }
+
+            50% {
+                filter: brightness(1.3) drop-shadow(0 0 40px rgba(139, 0, 255, 0.8));
+            }
+        }
+
+        .coming-soon-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 2rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-purple);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .product-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--purple-accent);
+            box-shadow: 0 30px 60px rgba(139, 0, 255, 0.3);
+        }
+
+        .product-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            border: 3px solid var(--purple-accent);
+            box-shadow: 0 0 30px rgba(139, 0, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            animation: productIconFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes productIconFloat {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-10px) scale(1.05);
+            }
+        }
+
+        .product-icon img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+        }
+
+        .product-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .product-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .product-features li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .product-features li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--purple-accent);
+        }
+
+        .coming-soon-badge {
+            display: inline-block;
+            background: var(--gradient-purple);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Countdown Timer */
+        .countdown-container {
+            margin-top: 4rem;
+            padding: 3rem;
+            background: rgba(139, 0, 255, 0.1);
+            border-radius: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .countdown-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--text-primary);
+        }
+
+        .countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .countdown-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            border-radius: 1rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple-accent);
+        }
+
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-glow);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            animation: countdownGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes countdownGlow {
+
+            0%,
+            100% {
+                filter: brightness(1);
+            }
+
+            50% {
+                filter: brightness(1.2);
+            }
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 0.5rem;
+        }
+
+        /* Scripts Section */
+        .scripts {
+            padding: 8rem 2rem;
+            background: radial-gradient(circle at 50% 50%, rgba(15, 15, 15, 0.8) 0%, var(--bg-primary) 100%);
+        }
+
+        .scripts-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .scripts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .script-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            will-change: transform;
+        }
+
+        .script-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(139, 0, 255, 0.1) 0%, transparent 70%);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .script-card:hover::before {
+            opacity: 1;
+        }
+
+        .script-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--purple-accent);
+            box-shadow: 0 20px 40px rgba(139, 0, 255, 0.25);
+        }
+
+        .script-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .script-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .script-badge {
+            background: var(--gradient-purple);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(139, 0, 255, 0.3);
+        }
+
+        .script-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .script-tags {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .tag {
+            background: rgba(139, 0, 255, 0.2);
+            color: var(--purple-accent);
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            border: 1px solid rgba(139, 0, 255, 0.3);
+        }
+
+        .download-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-purple);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            overflow: hidden;
+            outline: none;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .download-btn:focus {
+            outline: 2px solid var(--purple-accent);
+            outline-offset: 2px;
+        }
+
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .download-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(139, 0, 255, 0.4);
+        }
+
+        /* Changelog Section */
+        .changelog {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .changelog-container {
+            margin-top: 4rem;
+        }
+
+        .changelog-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .changelog-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple-accent);
+            box-shadow: 0 15px 30px rgba(139, 0, 255, 0.2);
+        }
+
+        .changelog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .changelog-version {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--purple-accent);
+        }
+
+        .changelog-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .changelog-badge {
+            background: var(--gradient-purple);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .changelog-badge.major {
+            background: var(--error);
+        }
+
+        .changelog-badge.minor {
+            background: var(--warning);
+        }
+
+        .changelog-badge.patch {
+            background: var(--success);
+        }
+
+        .changelog-content h4 {
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .changelog-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .changelog-list li {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .changelog-list li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--purple-accent);
+            font-size: 1.2rem;
+        }
+
+        .changelog-list.add li::before {
+            content: '+';
+            color: var(--success);
+        }
+
+        .changelog-list.fix li::before {
+            content: '✓';
+            color: var(--purple-accent);
+        }
+
+        .changelog-list.remove li::before {
+            content: '-';
+            color: var(--error);
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 8rem 2rem;
+            background: radial-gradient(circle at 50% 50%, rgba(15, 15, 15, 0.8) 0%, var(--bg-primary) 100%);
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-grid {
+            margin-top: 4rem;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            border-color: var(--purple-accent);
+        }
+
+        .faq-question {
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            background: transparent;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .faq-question:focus {
+            outline: 2px solid var(--purple-accent);
+            outline-offset: -2px;
+        }
+
+        .faq-question:hover {
+            background: rgba(139, 0, 255, 0.05);
+        }
+
+        .faq-question h3 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .faq-icon {
+            font-size: 1.2rem;
+            color: var(--purple-accent);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 1.5rem 2rem;
+            max-height: 500px;
+        }
+
+        .faq-answer p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Documentation Section */
+        .docs {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .doc-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple-accent);
+            box-shadow: 0 15px 30px rgba(139, 0, 255, 0.2);
+        }
+
+        .doc-icon {
+            width: 3rem;
+            height: 3rem;
+            background: var(--gradient-purple);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .doc-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .doc-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Community Section */
+        .community {
+            padding: 8rem 2rem;
+            background: radial-gradient(circle at 50% 50%, rgba(15, 15, 15, 0.8) 0%, var(--bg-primary) 100%);
+        }
+
+        .community-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .community-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 1.5rem;
+            padding: 3rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .community-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--purple-accent);
+            box-shadow: 0 20px 40px rgba(139, 0, 255, 0.2);
+        }
+
+        .community-icon {
+            width: 4rem;
+            height: 4rem;
+            background: var(--gradient-purple);
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+        }
+
+        .community-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .community-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .community-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 2rem;
+        }
+
+        .community-stat {
+            text-align: center;
+        }
+
+        .community-stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--purple-accent);
+            display: block;
+        }
+
+        .community-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+            margin-top: 6rem;
+            background: radial-gradient(circle at 50% 0%, rgba(15, 15, 15, 0.8) 0%, var(--bg-primary) 100%);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .footer-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-purple);
+            transition: width 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--purple-accent);
+        }
+
+        .footer-links a:hover::after {
+            width: 100%;
+        }
+
+        .footer-bottom {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .features-grid,
+            .scripts-grid,
+            .products-grid,
+            .docs-grid,
+            .community-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .countdown {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .countdown-number {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .coming-soon-title {
+                font-size: 2rem;
+            }
+
+            .footer-links {
+                gap: 1.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 3rem;
+            height: 3rem;
+            background: var(--gradient-purple);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 5px 15px rgba(139, 0, 255, 0.3);
+            color: white;
+            font-size: 1.5rem;
+            outline: none;
+        }
+
+        .scroll-top:focus {
+            outline: 2px solid var(--purple-accent);
+            outline-offset: 2px;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(139, 0, 255, 0.5);
+        }
+
+        .scroll-top:active {
+            transform: translateY(-1px);
+        }
+
+        .scroll-top.visible {
+            display: flex;
+        }
     </style>
-<base target="_blank">
-<base target="_blank">
+    <base target="_blank">
 </head>
+
 <body>
-    <header>
-        <div class="container">
-            <nav>
-                <a href="#" class="logo"><i class="fas fa-bolt logo-icon"></i>KelvenOS Optimizer</a>
-            </nav>
-        </div>
-    </header>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
 
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo-container">
+                <img src="https://github.com/kelven-optimizer/kelvenoptimizer/blob/7848345f64f7bbe49e3357a73d74300a8ac1ab82/imagens/kelvenos.png?raw=true" alt="KelvenOS Logo" class="logo-img" loading="eager" width="45" height="45">
+                <div class="logo-text">KelvenOS</div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#features">Recursos</a></li>
+                <li><a href="#coming-soon">Em Breve</a></li>
+                <li><a href="#scripts">Scripts</a></li>
+                <li><a href="#changelog">Changelog</a></li>
+                <li><a href="#docs">Documentação</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#community">Comunidade</a></li>
+            </ul>
+            <button class="mobile-menu-toggle" aria-label="Menu de navegação" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
     <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>KelvenOS Optimizer</h1>
-                    <h2>Todos os Scripts de Otimização</h2>
-                    <p>Coleção completa de scripts PowerShell e Batch do GitHub. Download direto e funcional.</p>
-                    <div class="hero-stats">
-                        <div class="stat"><span class="stat-number" id="script-count">10</span><span class="stat-label">Scripts</span></div>
-                        <div class="stat"><span class="stat-number">100%</span><span class="stat-label">Funcional</span></div>
-                        <div class="stat"><span class="stat-number" id="update-time">Agora</span><span class="stat-label">Atualizado</span></div>
+        <div class="hero-content">
+            <h1>Construído para Velocidade.<br>Otimizado para Jogos.</h1>
+            <p class="subtitle">Kelven Optimizer entrega uma experiência Windows finamente ajustada. Scripts PowerShell e Batch avançados para máxima performance, latência mínima e experiência de jogo definitiva.</p>
+
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number">11</span>
+                    <span class="hero-stat-label">Scripts</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">0.5ms</span>
+                    <span class="hero-stat-label">Timer</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">100%</span>
+                    <span class="hero-stat-label">Funcional</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">+FPS</span>
+                    <span class="hero-stat-label">Ganho</span>
+                </div>
+            </div>
+
+            <div class="cta-buttons">
+                <a href="#scripts" class="btn btn-primary">Baixar Scripts</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <h2 class="section-title">Otimizações Avançadas</h2>
+        <p class="section-subtitle">Tecnologia de ponta para extrair o máximo desempenho do seu sistema</p>
+
+        <div class="features-grid">
+            <div class="feature-card fade-in-up">
+                <div class="feature-icon">⚡</div>
+                <h3>Performance Extrema</h3>
+                <p>Agendamento avançado de CPU, gerenciamento de memória e otimizações de plano de energia. Alcance máximo FPS e latência mínima.</p>
+            </div>
+            <div class="feature-card fade-in-up">
+                <div class="feature-icon">🎮</div>
+                <h3>Modo Gamer</h3>
+                <p>Otimização do Game Mode, desativa DVR, resolução do timer em 0.5ms e tweaks específicos para jogos competitivos.</p>
+            </div>
+            <div class="feature-card fade-in-up">
+                <div class="feature-icon">📊</div>
+                <h3>Monitor em Tempo Real</h3>
+                <p>Monitor KelvenOS Performance com sistema de feedback visual. Acompanhe status de todas as otimizações com interface colorida.</p>
+            </div>
+            <div class="feature-card fade-in-up">
+                <div class="feature-icon">🌐</div>
+                <h3>Otimização de Rede</h3>
+                <p>Otimização da pilha TCP/IP, ping reduzido, prioridade de pacotes aprimorada e redução de latência de rede para jogos online.</p>
+            </div>
+            <div class="feature-card fade-in-up">
+                <div class="feature-icon">🔧</div>
+                <h3>Limpeza do Sistema</h3>
+                <p>Limpeza profunda do sistema, remoção de arquivos temporários, otimização de SSD e desativa telemetria do Windows.</p>
+            </div>
+            <div class="feature-card fade-in-up">
+                <div class="feature-icon">🛡️</div>
+                <h3>Privacidade & Segurança</h3>
+                <p>Tweaks avançados de privacidade, remoção de telemetria e reforço de segurança sem quebrar funcionalidades do Windows.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coming Soon Section -->
+    <section class="coming-soon" id="coming-soon">
+        <div class="coming-soon-container">
+            <h2 class="coming-soon-title">🚀 Em Breve</h2>
+            <p class="coming-soon-subtitle">Duas novas ferramentas revolucionárias para transformar sua experiência Windows</p>
+
+            <div class="products-grid">
+                <!-- Painel Kelven Optimizer -->
+                <div class="product-card fade-in-up">
+                    <div class="product-icon">
+                        <img src="https://github.com/kelven-optimizer/kelvenoptimizer/blob/7848345f64f7bbe49e3357a73d74300a8ac1ab82/imagens/kelvenos.png?raw=true" alt="KelvenOS Painel" loading="lazy" width="50" height="50">
+                    </div>
+                    <h3 class="product-title">Kelven Optimizer Painel</h3>
+                    <p class="product-description">
+                        Interface gráfica completa para gerenciar todas as otimizações em um único lugar.
+                        Controle total sobre seu sistema com apenas alguns cliques.
+                    </p>
+                    <ul class="product-features">
+                        <li>Dashboard intuitivo e moderno</li>
+                        <li>Otimizações com um clique</li>
+                        <li>Monitoramento em tempo real</li>
+                        <li>Perfis personalizados</li>
+                        <li>Backup e restauração automática</li>
+                    </ul>
+                    <span class="coming-soon-badge">EM BREVE</span>
+                </div>
+
+                <!-- Playbook -->
+                <div class="product-card fade-in-up">
+                    <div class="product-icon">
+                        <img src="https://github.com/kelven-optimizer/kelvenoptimizer/blob/7848345f64f7bbe49e3357a73d74300a8ac1ab82/imagens/kelvenos.png?raw=true" alt="KelvenOS Playbook" loading="lazy" width="50" height="50">
+                    </div>
+                    <h3 class="product-title">KelvenOS Playbook</h3>
+                    <p class="product-description">
+                        Guia completo e interativo com todos os segredos de otimização Windows.
+                        Tutoriais passo a passo para máxima performance.
+                    </p>
+                    <ul class="product-features">
+                        <li>Guias interativos passo a passo</li>
+                        <li>Explicações técnicas detalhadas</li>
+                        <li>Vídeos tutoriais exclusivos</li>
+                        <li>Comunidade premium integrada</li>
+                        <li>Atualizações constantes</li>
+                    </ul>
+                    <span class="coming-soon-badge">EM BREVE</span>
+                </div>
+            </div>
+
+            <!-- Countdown Timer -->
+            <div class="countdown-container fade-in-up">
+                <h3 class="countdown-title">Lançamento em:</h3>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">00</span>
+                        <span class="countdown-label">Dias</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label">Horas</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label">Minutos</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label">Segundos</span>
                     </div>
                 </div>
-                <div class="hero-visual">
-                    <div class="terminal">
-                        <div class="terminal-header">
-                            <div class="terminal-dot red"></div>
-                            <div class="terminal-dot yellow"></div>
-                            <div class="terminal-dot green"></div>
-                        </div>
-                        <div class="terminal-content">
-                            <div class="terminal-line"><span class="terminal-path">PS C:\KelvenOS\></span> <span class="terminal-command">Get-AllScripts</span></div>
-                            <div class="terminal-line">📂 Buscando todos os scripts...</div>
-                            <div class="terminal-line">✅ Scripts encontrados: <span id="terminal-count">10</span></div>
-                            <div class="terminal-line">📥 Downloads forçados ativados</div>
-                            <div class="terminal-line">🔄 Atualização em tempo real</div>
-                            <div class="terminal-line">⚡ Pronto para otimizar!</div>
-                        </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts Section -->
+    <section class="scripts" id="scripts">
+        <div class="scripts-container">
+            <h2 class="section-title">Coleção de Scripts Poderosos</h2>
+            <p class="section-subtitle">11 scripts profissionais para otimizar cada aspecto do seu sistema</p>
+
+            <div class="scripts-grid">
+                <!-- Performance Monitor -->
+                <div class="script-card fade-in-up">
+                    <div class="script-header">
+                        <span class="script-title">Monitor de Performance</span>
+                        <span class="script-badge">PowerShell</span>
+                    </div>
+                    <p class="script-description">Sistema completo de monitoramento com feedback visual. Verifique status de otimizações, saúde do sistema e métricas de performance em tempo real.</p>
+                    <div class="script-tags">
+                        <span class="tag">Monitoramento</span>
+                        <span class="tag">Status</span>
+                        <span class="tag">Interface</span>
+                    </div>
+                    <a href="https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/KelvenOS-Performance-Monitor.ps1" download="KelvenOS-Performance-Monitor.ps1" class="download-btn">Baixar Script</a>
+                </div>
+
+                <!-- Gaming Optimizer -->
+                <div class="script-card fade-in-up">
+                    <div class="script-header">
+                        <span class="script-title">Otimizador Gamer</span>
+                        <span class="script-badge">Batch</span>
+                    </div>
+                    <p class="script-description">Ativa Modo Gamer, desativa DVR, define resolução do timer em 0.5ms e aplica otimizações específicas para jogos.</p>
+                    <div class="script-tags">
+                        <span class="tag">Gamer</span>
+                        <span class="tag">FPS</span>
+                        <span class="tag">Latência</span>
+                    </div>
+                    <a href="https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/gaming-optimizer.bat" download="gaming-optimizer.bat" class="download-btn">Baixar Script</a>
+                </div>
+
+                <!-- CPU Extreme -->
+                <div class="script-card fade-in-up">
+                    <div class="script-header">
+                        <span class="script-title">CPU Extrema</span>
+                        <span class="script-badge">Batch</span>
+                    </div>
+                    <p class="script-description">Tweaks extremos de performance: desativa C-states, otimiza plano de energia, gerenciamento de memória e agendamento de CPU.</p>
+                    <div class="script-tags">
+                        <span class="tag">CPU</span>
+                        <span class="tag">Performance</span>
+                        <span class="tag">Avançado</span>
+                    </div>
+                    <a href="https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/cpu-extrema.bat" download="cpu-extrema.bat" class="download-btn">Baixar Script</a>
+                </div>
+
+                <!-- Network Optimizer -->
+                <div class="script-card fade-in-up">
+                    <div class="script-header">
+                        <span class="script-title">Otimizador de Rede</span>
+                        <span class="script-badge">Batch</span>
+                    </div>
+                    <p class="script-description">Otimiza parâmetros de rede, reduz ping, melhora estabilidade da conexão e prioriza tráfego de jogos.</p>
+                    <div class="script-tags">
+                        <span class="tag">Rede</span>
+                        <span class="tag">Ping</span>
+                        <span class="tag">Conexão</span>
+                    </div>
+                    <a href="https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/otimizacao-de-rede.bat" download="otimizacao-de-rede.bat" class="download-btn">Baixar Script</a>
+                </div>
+
+                <!-- SSD Optimizer -->
+                <div class="script-card fade-in-up">
+                    <div class="script-header">
+                        <span class="script-title">Otimizador SSD</span>
+                        <span class="script-badge">Batch</span>
+                    </div>
+                    <p class="script-description">Otimizações específicas para SSD: ativa TRIM, desativa prefetch, otimiza superfetch e indexing.</p>
+                    <div class="script-tags">
+                        <span class="tag">SSD</span>
+                        <span class="tag">Armazenamento</span>
+                        <span class="tag">Performance</span>
+                    </div>
+                    <a href="https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/ssd-optimizer.bat" download="ssd-optimizer.bat" class="download-btn">Baixar Script</a>
+                </div>
+
+                <!-- Privacy Guard -->
+                <div class="script-card fade-in-up">
+                    <div class="script-header">
+                        <span class="script-title">Guarda de Privacidade</span>
+                        <span class="script-badge">Batch</span>
+                    </div>
+                    <p class="script-description">Tweks avançados de privacidade: desativa telemetria, remoção de coleta de dados e reforço de privacidade do Windows.</p>
+                    <div class="script-tags">
+                        <span class="tag">Privacidade</span>
+                        <span class="tag">Telemetria</span>
+                        <span class="tag">Segurança</span>
+                    </div>
+                    <a href="https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/disable-telemetry.bat" download="disable-telemetry.bat" class="download-btn">Baixar Script</a>
+                </div>
+
+                <!-- System Cleanup -->
+                <div class="script-card fade-in-up">
+                    <div class="script-header">
+                        <span class="script-title">Limpeza do Sistema</span>
+                        <span class="script-badge">Batch</span>
+                    </div>
+                    <p class="script-description">Remove arquivos temporários, limpa cache, otimiza espaço em disco e melhora velocidade geral do sistema.</p>
+                    <div class="script-tags">
+                        <span class="tag">Limpeza</span>
+                        <span class="tag">Espaço</span>
+                        <span class="tag">Velocidade</span>
+                    </div>
+                    <a href="https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/limpeza-completa.bat" download="limpeza-completa.bat" class="download-btn">Baixar Script</a>
+                </div>
+
+                <!-- Network Reset -->
+                <div class="script-card fade-in-up">
+                    <div class="script-header">
+                        <span class="script-title">Reset de Rede</span>
+                        <span class="script-badge">Batch</span>
+                    </div>
+                    <p class="script-description">Reseta configurações de rede TCP/IP, renova IP, limpa cache DNS e resolve problemas de conectividade.</p>
+                    <div class="script-tags">
+                        <span class="tag">Rede</span>
+                        <span class="tag">TCP/IP</span>
+                        <span class="tag">DNS</span>
+                    </div>
+                    <a href="https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/reset-rede.bat" download="reset-rede.bat" class="download-btn">Baixar Script</a>
+                </div>
+
+                <!-- Service Optimizer -->
+                <div class="script-card fade-in-up">
+                    <div class="script-header">
+                        <span class="script-title">Otimizador de Serviços</span>
+                        <span class="script-badge">Batch</span>
+                    </div>
+                    <p class="script-description">Desativa serviços desnecessários do Windows, melhora boot time e libera recursos do sistema.</p>
+                    <div class="script-tags">
+                        <span class="tag">Serviços</span>
+                        <span class="tag">Boot</span>
+                        <span class="tag">Recursos</span>
+                    </div>
+                    <a href="https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/otimizacao-servicos.bat" download="otimizacao-servicos.bat" class="download-btn">Baixar Script</a>
+                </div>
+
+                <!-- Registry Optimizer -->
+                <div class="script-card fade-in-up">
+                    <div class="script-header">
+                        <span class="script-title">Otimizador de Registro</span>
+                        <span class="script-badge">Batch</span>
+                    </div>
+                    <p class="script-description">Otimiza chaves de registro do Windows, melhora responsividade e remove entradas obsoletas.</p>
+                    <div class="script-tags">
+                        <span class="tag">Registro</span>
+                        <span class="tag">Performance</span>
+                        <span class="tag">Responsividade</span>
+                    </div>
+                    <a href="https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/reg-optimizer.bat" download="reg-optimizer.bat" class="download-btn">Baixar Script</a>
+                </div>
+
+                <!-- Restore Point -->
+                <div class="script-card fade-in-up">
+                    <div class="script-header">
+                        <span class="script-title">Criar Ponto de Restauração</span>
+                        <span class="script-badge">PowerShell</span>
+                    </div>
+                    <p class="script-description">Cria ponto de restauração do Windows antes de aplicar otimizações para segurança e recuperação.</p>
+                    <div class="script-tags">
+                        <span class="tag">Backup</span>
+                        <span class="tag">Segurança</span>
+                        <span class="tag">Recuperação</span>
+                    </div>
+                    <a href="https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/create-restore-point.ps1" download="create-restore-point.ps1" class="download-btn">Baixar Script</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Changelog Section -->
+    <section class="changelog" id="changelog">
+        <h2 class="section-title">Changelog & Atualizações</h2>
+        <p class="section-subtitle">Acompanhe as melhorias e novidades do KelvenOS Optimizer</p>
+
+        <div class="changelog-container">
+            <!-- Versão 2.0 -->
+            <div class="changelog-item fade-in-up">
+                <div class="changelog-header">
+                    <span class="changelog-version">v2.0.0</span>
+                    <span class="changelog-badge maior">maior</span>
+                    <span class="changelog-date">Dezembro 2025</span>
+                </div>
+                <div class="changelog-content">
+                    <h4>🚀 Grandes Novidades</h4>
+                    <ul class="changelog-list add">
+                        <li>Nova interface web completa com design dark</li>
+                        <li>Adicionado sistema de monitoramento em tempo real</li>
+                        <li>Implementado otimizador de jogos com perfis específicos</li>
+                        <li>Novo script de performance extrema para CPU</li>
+                    </ul>
+
+                    <h4>✨ Melhorias</h4>
+                    <ul class="changelog-list fix">
+                        <li>Otimizado algoritmo de limpeza de registro</li>
+                        <li>Melhorado desempenho do monitor de sistema</li>
+                        <li>Adicionado mais opções de personalização</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Versão 1.5 -->
+            <div class="changelog-item fade-in-up">
+                <div class="changelog-header">
+                    <span class="changelog-version">v1.5.0</span>
+                    <span class="changelog-badge minor">Menor</span>
+                    <span class="changelog-date">Novembro 2025</span>
+                </div>
+                <div class="changelog-content">
+                    <h4>🆕 Novos Recursos</h4>
+                    <ul class="changelog-list add">
+                        <li>Adicionado otimizador de rede com redução de ping</li>
+                        <li>Implementado sistema de backup automático</li>
+                        <li>Novo script de privacidade e telemetria</li>
+                    </ul>
+
+                    <h4>🔧 Correções</h4>
+                    <ul class="changelog-list fix">
+                        <li>Corrigido bug no otimizador de SSD</li>
+                        <li>Melhorada compatibilidade com Windows 11</li>
+                        <li>Fixado problema de permissões em alguns scripts</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Versão 1.4 -->
+            <div class="changelog-item fade-in-up">
+                <div class="changelog-header">
+                    <span class="changelog-version">v1.4.0</span>
+                    <span class="changelog-badge patch">correção</span>
+                    <span class="changelog-date">Outubro 2025</span>
+                </div>
+                <div class="changelog-content">
+                    <h4>🔧 Correções e Melhorias</h4>
+                    <ul class="changelog-list fix">
+                        <li>Otimizado script de limpeza para maior velocidade</li>
+                        <li>Melhorado algoritmo de detecção de sistema</li>
+                        <li>Adicionado mais opções de configuração</li>
+                    </ul>
+
+                    <h4>🗑️ Removido</h4>
+                    <ul class="changelog-list remove">
+                        <li>Removido script obsoleto de otimização antiga</li>
+                        <li>Eliminado código legado não utilizado</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section class="docs" id="docs">
+        <h2 class="section-title">Documentação & Guias</h2>
+        <p class="section-subtitle">Aprenda a usar cada recurso e maximize seu desempenho</p>
+
+        <div class="docs-grid">
+            <a href="#instalacao" class="doc-card fade-in-up">
+                <div class="doc-icon">📥</div>
+                <h3 class="doc-title">Instalação e Configuração</h3>
+                <p class="doc-description">Guia completo de como instalar e configurar o KelvenOS Optimizer em seu sistema Windows.</p>
+            </a>
+
+            <a href="#uso-basico" class="doc-card fade-in-up">
+                <div class="doc-icon">🎯</div>
+                <h3 class="doc-title">Uso Básico</h3>
+                <p class="doc-description">Aprenda os conceitos fundamentais e como começar a otimizar seu sistema de forma segura.</p>
+            </a>
+
+            <a href="#scripts-avancados" class="doc-card fade-in-up">
+                <div class="doc-icon">⚡</div>
+                <h3 class="doc-title">Scripts Avançados</h3>
+                <p class="doc-description">Documentação técnica detalhada de cada script e suas funcionalidades específicas.</p>
+            </a>
+
+            <a href="#solucao-problemas" class="doc-card fade-in-up">
+                <div class="doc-icon">🔧</div>
+                <h3 class="doc-title">Solução de Problemas</h3>
+                <p class="doc-description">Respostas para problemas comuns e como resolver questões de compatibilidade.</p>
+            </a>
+
+            <a href="#benchmarks" class="doc-card fade-in-up">
+                <div class="doc-icon">📊</div>
+                <h3 class="doc-title">Benchmarks & Testes</h3>
+                <p class="doc-description">Resultados de testes de performance e comparações antes/depois das otimizações.</p>
+            </a>
+
+            <a href="#api-referencia" class="doc-card fade-in-up">
+                <div class="doc-icon">🔌</div>
+                <h3 class="doc-title">API & Referência</h3>
+                <p class="doc-description">Documentação técnica para desenvolvedores que querem integrar ou modificar os scripts.</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="faq-container">
+            <h2 class="section-title">Perguntas Frequentes</h2>
+            <p class="section-subtitle">Respostas para as dúvidas mais comuns sobre o KelvenOS Optimizer</p>
+
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <h3>Os scripts são seguros para usar?</h3>
+                        <span class="faq-icon" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="faq-answer" aria-hidden="true">
+                        <p>Sim! Todos os scripts são testados extensivamente em múltiplos ambientes. Recomendamos sempre criar um ponto de restauração antes de executar e ler o código antes de aplicar. Os scripts são open source, então você pode verificar cada linha.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <h3>Preciso executar todos os scripts?</h3>
+                        <span class="faq-icon" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="faq-answer" aria-hidden="true">
+                        <p>Não! Cada script é independente e atende a necessidades específicas. Use apenas os que fizerem sentido para seu uso. Recomendamos começar com o Monitor de Performance para avaliar seu sistema antes de aplicar otimizações.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <h3>Funciona em qualquer versão do Windows?</h3>
+                        <span class="faq-icon" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="faq-answer" aria-hidden="true">
+                        <p>Os scripts são compatíveis com Windows 10 e 11 (todas as versões). Algumas otimizações específicas podem variar conforme a versão. Recomendamos Windows 10 1903+ ou Windows 11 para melhor experiência.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <h3>Como faço para desfazer as otimizações?</h3>
+                        <span class="faq-icon" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="faq-answer" aria-hidden="true">
+                        <p>Cada script tem um correspondente de restauração. Recomendamos sempre criar um ponto de restauração antes de aplicar otimizações. Você também pode usar o script de backup/recuperação incluído no pacote.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <h3>Posso usar em computadores corporativos?</h3>
+                        <span class="faq-icon" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="faq-answer" aria-hidden="true">
+                        <p>Recomendamos uso pessoal. Em ambientes corporativos, algumas otimizações podem afetar políticas de segurança. Consulte o departamento de TI antes de aplicar em máquinas da empresa.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <h3>Quanto ganho de performance posso esperar?</h3>
+                        <span class="faq-icon" aria-hidden="true">▼</span>
+                    </button>
+                    <div class="faq-answer" aria-hidden="true">
+                        <p>Varia conforme seu sistema, mas usuários relatam ganhos de 10-25% em FPS em jogos, boot 40% mais rápido, e latência reduzida em até 30%. Use nosso monitor para medir os resultados em seu sistema específico.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="stats-bar">
-        <div class="container">
-            <div class="stats">
-                <div class="stat">
-                    <span class="stat-number" id="total-scripts">10</span>
-                    <span class="stat-label">Total de Scripts</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number" id="ps1-count">1</span>
-                    <span class="stat-label">PowerShell</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number" id="bat-count">9</span>
-                    <span class="stat-label">Batch</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number" id="reg-count">0</span>
-                    <span class="stat-label">Registry</span>
+    <!-- Community Section -->
+    <section class="community" id="community">
+        <div class="community-container">
+            <h2 class="section-title">Comunidade KelvenOS</h2>
+            <p class="section-subtitle">Junte-se a milhares de usuários otimizando seus sistemas</p>
+
+            <div class="community-grid">
+                <div class="community-card fade-in-up">
+                    <div class="community-icon">💬</div>
+                    <h3 class="community-title">Discord</h3>
+                    <p class="community-description">Chat em tempo real com a comunidade, suporte técnico, compartilhamento de experiências e novidades em primeira mão.</p>
+                    <div class="community-stats">
+                        <div class="community-stat">
+                            <span class="community-stat-number">18</span>
+                            <span class="community-stat-label">Membros</span>
+                        </div>
+                        <div class="community-stat">
+                            <span class="community-stat-number">24/7</span>
+                            <span class="community-stat-label">Suporte</span>
+                        </div>
+                    </div>
+                    <a href="https://discord.gg/YnWMgwDgEq" class="btn btn-primary">Entrar no Discord</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="scripts">
-        <div class="container">
-            <h2 class="section-title">Todos os Scripts do GitHub</h2>
-            
-            <div class="warning-box">
-                <i class="fas fa-exclamation-triangle"></i>
-                <strong>Importante:</strong> Execute todos os scripts como administrador. Crie um ponto de restauração antes de aplicar otimizações.
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#home">Início</a>
+                <a href="#features">Recursos</a>
+                <a href="#scripts">Scripts</a>
+                <a href="#changelog">Changelog</a>
+                <a href="#docs">Documentação</a>
+                <a href="#faq">FAQ</a>
+                <a href="https://discord.gg/YnWMgwDgEq">Discord</a>
             </div>
 
-            <div id="scripts-container">
-                <div class="loading">
-                    <i class="fas fa-spinner"></i>
-                    <p>Carregando todos os scripts do GitHub...</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo"><i class="fas fa-bolt"></i>KelvenOS Optimizer</div>
-                <p class="footer-tagline">
-                    Todos os scripts de otimização Windows em um só lugar.<br>
-                    Atualizado automaticamente do GitHub.
-                </p>
-                <div class="social-links">
-                    <a href="https://github.com/kelven-optimizer" class="social-link github" target="_blank"><i class="fab fa-github"></i></a>
-                </div>
-                <p class="copyright">
-                    © 2025 KelvenOS Optimizer<br>
-                    Scripts carregados diretamente de: https://github.com/kelven-optimizer/kelvenoptimizer
-                </p>
+            <div class="footer-bottom">
+                <p>&copy; 2025 KelvenOS Optimizer. Edição Dark. Licença MIT.</p>
+                <p>Made with ❤️ pela comunidade KelvenOS | Todos os scripts são open source e gratuitos</p>
             </div>
         </div>
     </footer>
 
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop" aria-label="Voltar ao topo" title="Voltar ao topo">↑</button>
+
     <script>
-        // ✅ CONFIGURAÇÃO FIXA DO SEU REPOSITÓRIO
-        const GITHUB = {
-            owner: 'kelven-optimizer',
-            repo: 'kelvenoptimizer',
-            branch: 'main'
+        /**
+         * KelvenOS Optimizer - Scripts de Funcionalidade
+         * Organizado e otimizado para melhor performance e manutenibilidade
+         */
+
+        // ============================================
+        // CONFIGURAÇÕES E CONSTANTES
+        // ============================================
+        const CONFIG = {
+            GITHUB_BASE_URL: 'https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/',
+            COUNTDOWN_TARGET: '2026-01-01T00:00:00',
+            SCROLL_THRESHOLD: 50,
+            ANIMATION_DELAY: 1000,
+            FADE_DURATION: 500
         };
 
-        // Mapeamento de tipos de arquivo
-        const FILE_TYPES = {
-            'bat': { color: '#0078D4', label: 'BAT', icon: 'fa-terminal' },
-            'ps1': { color: '#9D4EDD', label: 'PS1', icon: 'fa-code' },
-            'reg': { color: '#ffbb33', label: 'REG', icon: 'fa-windows' },
-            'txt': { color: '#A0A0B0', label: 'TXT', icon: 'fa-file-alt' }
-        };
-
-        // ✅ LINKS FIXOS DOS SEUS SCRIPTS - PELO AMOR DE DEUS!
-        const SCRIPTS_FIXOS = [
-            {
-                name: '01-performance-powerplan.bat',
-                path: 'scripts/fps-extreme/01-performance-powerplan.bat',
-                download_url: 'https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/fps-extreme/01-performance-powerplan.bat',
-                type: 'bat',
-                title: 'Performance Power Plan',
-                description: 'Power plan otimizado para máxima performance do sistema.',
-                features: ['Power plan extremo', 'CPU 100%', 'Performance máxima', 'Latência mínima']
-            },
-            {
-                name: '02-cpu-performance.bat',
-                path: 'scripts/fps-extreme/02-cpu-performance.bat',
-                download_url: 'https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/fps-extreme/02-cpu-performance.bat',
-                type: 'bat',
-                title: 'CPU Performance',
-                description: 'Otimizações específicas para processador e desativa C-states.',
-                features: ['Desativa C-states', 'CPU otimizada', 'Boot rápido', 'Responsividade']
-            },
-            {
-                name: '03-gpu-optimization.bat',
-                path: 'scripts/fps-extreme/03-gpu-optimization.bat',
-                download_url: 'https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/fps-extreme/03-gpu-optimization.bat',
-                type: 'bat',
-                title: 'GPU Optimization',
-                description: 'Otimizações para placa de vídeo e gráficos.',
-                features: ['GPU otimizada', 'Mais FPS', 'Gráficos fluidos', 'Input lag zero']
-            },
-            {
-                name: '04-memory-optimization.bat',
-                path: 'scripts/fps-extreme/04-memory-optimization.bat',
-                download_url: 'https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/fps-extreme/04-memory-optimization.bat',
-                type: 'bat',
-                title: 'Memory Optimization',
-                description: 'Otimiza uso de memória RAM e desativa compressão.',
-                features: ['Sem compressão', 'RAM livre', 'Mais FPS', 'Sem travamentos']
-            },
-            {
-                name: '05-network-gaming.bat',
-                path: 'scripts/fps-extreme/05-network-gaming.bat',
-                download_url: 'https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/fps-extreme/05-network-gaming.bat',
-                type: 'bat',
-                title: 'Network Gaming',
-                description: 'Otimizações de rede para gaming com menos lag.',
-                features: ['Reduz ping', 'TCP otimizado', 'Conexão estável', 'Menos lag']
-            },
-            {
-                name: '06-windows-debloat.bat',
-                path: 'scripts/fps-extreme/06-windows-debloat.bat',
-                download_url: 'https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/fps-extreme/06-windows-debloat.bat',
-                type: 'bat',
-                title: 'Windows Debloat',
-                description: 'Remove aplicativos desnecessários e otimiza o Windows.',
-                features: ['Remove bloatware', 'Sistema leve', 'Boot rápido', 'Performance +']
-            },
-            {
-                name: '07-nvidia-optimizer.bat',
-                path: 'scripts/fps-extreme/07-nvidia-optimizer.bat',
-                download_url: 'https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/fps-extreme/07-nvidia-optimizer.bat',
-                type: 'bat',
-                title: 'NVIDIA Optimizer',
-                description: 'Otimizações específicas para placas NVIDIA.',
-                features: ['NVIDIA otimizada', 'Drivers otimizados', 'FPS boost', 'Gráficos fluidos']
-            },
-            {
-                name: '08-amd-optimizer.bat',
-                path: 'scripts/fps-extreme/08-amd-optimizer.bat',
-                download_url: 'https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/fps-extreme/08-amd-optimizer.bat',
-                type: 'bat',
-                title: 'AMD Optimizer',
-                description: 'Otimizações específicas para placas AMD.',
-                features: ['AMD otimizada', 'Drivers otimizados', 'Performance +', 'Stabilidade']
-            },
-            {
-                name: '09-ultimate-fps-booster.bat',
-                path: 'scripts/fps-extreme/09-ultimate-fps-booster.bat',
-                download_url: 'https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/fps-extreme/09-ultimate-fps-booster.bat',
-                type: 'bat',
-                title: 'Ultimate FPS Booster',
-                description: 'Combinação de todas as otimizações para máximo FPS.',
-                features: ['Máximo FPS', 'Todas otimizações', 'Gaming puro', 'Performance extrema']
-            },
-            {
-                name: 'restore-original.bat',
-                path: 'scripts/fps-extreme/restore-original.bat',
-                download_url: 'https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/fps-extreme/restore-original.bat',
-                type: 'bat',
-                title: 'Restore Original',
-                description: 'Restaura todas as configurações originais do Windows.',
-                features: ['Backup completo', 'Restaura fácil', 'Segurança total', 'Desfaz tudo']
-            }
-        ];
-
-        // ✅ PERFORMANCE MONITOR - SCRIPT ÚNICO
-        const PERFORMANCE_MONITOR = {
-            name: 'KelvenOS-Performance-Monitor.ps1',
-            path: 'scripts/utilities/KelvenOS-Performance-Monitor.ps1',
-            download_url: 'https://raw.githubusercontent.com/kelven-optimizer/kelvenoptimizer/main/scripts/utilities/KelvenOS-Performance-Monitor.ps1',
-            type: 'ps1',
-            title: 'Performance Monitor',
-            description: 'Monitor em tempo real que verifica status das otimizações e mostra métricas de CPU/RAM.',
-            features: ['Verifica Power Plan', 'Status Game Mode/DVR', 'Telemetria', 'CPU/RAM real-time', 'Recomendações']
-        };
-
-        // Função para criar card do Performance Monitor
-        function createPerformanceMonitorCard() {
-            const file = PERFORMANCE_MONITOR;
-            const fileType = FILE_TYPES[file.type];
-            
-            return `
-                <div class="script-card" style="border: 2px solid var(--primary);">
-                    <div class="script-header">
-                        <h3 class="script-title">🎯 ${file.title}</h3>
-                        <span class="script-type" style="background:${fileType.color}20; color:${fileType.color}">${fileType.label}</span>
-                    </div>
-                    <p class="script-description">${file.description}</p>
-                    <ul class="script-features">
-                        ${file.features.map(feature => `<li>${feature}</li>`).join('')}
-                    </ul>
-                    <div class="script-actions">
-                        <button class="script-download" onclick="forceDownload('${file.download_url}', '${file.name}')">
-                            <i class="fas fa-download"></i>Baixar Monitor
-                        </button>
-                        <a href="https://github.com/kelven-optimizer/kelvenoptimizer/blob/main/${file.path}" 
-                           class="script-view" target="_blank">
-                            <i class="fab fa-github"></i>Ver Código
-                        </a>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Função para criar cards dos scripts fixos
-        function createFixedScriptCard(file) {
-            const fileType = FILE_TYPES[file.type];
-            
-            return `
-                <div class="script-card">
-                    <div class="script-header">
-                        <h3 class="script-title">${file.title}</h3>
-                        <span class="script-type" style="background:${fileType.color}20; color:${fileType.color}">${fileType.label}</span>
-                    </div>
-                    <p class="script-description">${file.description}</p>
-                    <ul class="script-features">
-                        ${file.features.map(feature => `<li>${feature}</li>`).join('')}
-                    </ul>
-                    <div class="script-actions">
-                        <button class="script-download" onclick="forceDownload('${file.download_url}', '${file.name}')">
-                            <i class="fas fa-download"></i>Baixar
-                        </button>
-                        <a href="https://github.com/kelven-optimizer/kelvenoptimizer/blob/main/${file.path}" 
-                           class="script-view" target="_blank">
-                            <i class="fab fa-github"></i>Ver Código
-                        </a>
-                    </div>
-                </div>
-            `;
-        }
-
-        // ✅ DOWNLOAD CORRIGIDO - PELO AMOR DE DEUS!
-        function forceDownload(url, filename) {
-            console.log('🎯 Iniciando download:', filename);
-            console.log('📥 URL:', url);
-            
-            // Usa fetch para baixar o arquivo como blob e forçar download
-            fetch(url)
-                .then(response => {
-                    console.log('✅ Resposta recebida:', response.status);
-                    return response.blob();
-                })
-                .then(blob => {
-                    console.log('📦 Blob criado:', blob.size, 'bytes');
-                    
-                    // Cria URL temporária do blob
-                    const blobUrl = window.URL.createObjectURL(blob);
-                    console.log('🔗 URL temporária criada');
-                    
-                    // Cria link de download
-                    const link = document.createElement('a');
-                    link.href = blobUrl;
-                    link.download = filename;
-                    link.style.display = 'none';
-                    
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    
-                    console.log('✅ Download iniciado!');
-                    
-                    // Limpa URL temporária após um tempo
-                    setTimeout(() => {
-                        window.URL.revokeObjectURL(blobUrl);
-                        console.log('🧹 URL temporária limpa');
-                    }, 100);
-                    
-                    // Feedback visual
-                    showDownloadFeedback(filename);
-                })
-                .catch(error => {
-                    console.error('❌ Erro no download:', error);
-                    
-                    // Fallback - método tradicional como backup
-                    console.log('🔄 Tentando fallback...');
-                    const link = document.createElement('a');
-                    link.href = url;
-                    link.download = filename;
-                    link.style.display = 'none';
-                    
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    
-                    showDownloadFeedback(filename);
+        // ============================================
+        // UTILITÁRIOS
+        // ============================================
+        const Utils = {
+            /**
+             * Cria um elemento DOM de forma segura
+             */
+            createElement: (tag, attributes = {}, textContent = '') => {
+                const element = document.createElement(tag);
+                Object.entries(attributes).forEach(([key, value]) => {
+                    element.setAttribute(key, value);
                 });
-        }
+                if (textContent) element.textContent = textContent;
+                return element;
+            },
 
-        // Função para mostrar feedback de download
-        function showDownloadFeedback(filename) {
-            const feedback = document.createElement('div');
-            feedback.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: var(--success);
-                color: white;
-                padding: 1rem 1.5rem;
-                border-radius: 8px;
-                box-shadow: var(--card-shadow);
-                z-index: 9999;
-                font-weight: 600;
-                animation: slideIn 0.3s ease;
-            `;
-            feedback.innerHTML = `<i class="fas fa-check" style="margin-right: 0.5rem;"></i> ${filename} baixado!`;
-            
-            document.body.appendChild(feedback);
-            
-            // Remove após 3 segundos
-            setTimeout(() => {
-                feedback.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => {
-                    document.body.removeChild(feedback);
-                }, 300);
-            }, 3000);
-        }
+            /**
+             * Debounce para otimizar eventos de scroll
+             */
+            debounce: (func, wait) => {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            },
 
-        // ✅ CARREGA SCRIPTS FIXOS - PELO AMOR DE DEUS!
-        function loadFixedScripts() {
-            console.log('🚀 Iniciando carregamento dos scripts fixos...');
-            
-            const container = document.getElementById('scripts-container');
-            const scriptCount = document.getElementById('script-count');
-            const terminalCount = document.getElementById('terminal-count');
-            const totalScripts = document.getElementById('total-scripts');
-            const ps1Count = document.getElementById('ps1-count');
-            const batCount = document.getElementById('bat-count');
-            const regCount = document.getElementById('reg-count');
-            const updateTime = document.getElementById('update-time');
-
-            try {
-                // Conta estatísticas
-                const totalFiles = SCRIPTS_FIXOS.length + 1; // +1 para o Performance Monitor
-                const ps1Files = 1; // Performance Monitor
-                const batFiles = SCRIPTS_FIXOS.length;
-                const regFiles = 0;
-
-                console.log('📊 Estatísticas:', { totalFiles, ps1Files, batFiles, regFiles });
-
-                // Atualiza estatísticas
-                scriptCount.textContent = totalFiles;
-                terminalCount.textContent = totalFiles;
-                totalScripts.textContent = totalFiles;
-                ps1Count.textContent = ps1Files;
-                batCount.textContent = batFiles;
-                regCount.textContent = regFiles;
-                updateTime.textContent = new Date().toLocaleTimeString('pt-BR');
-
-                // Cria o grid com os scripts
-                let gridHTML = '<div class="scripts-grid">';
-                
-                // Adiciona o Performance Monitor em destaque
-                console.log('🎯 Adicionando Performance Monitor...');
-                gridHTML += createPerformanceMonitorCard();
-                
-                // Adiciona todos os scripts fixos
-                console.log('📁 Adicionando scripts fixos...');
-                SCRIPTS_FIXOS.forEach((file, index) => {
-                    console.log(`📄 Script ${index + 1}: ${file.name}`);
-                    gridHTML += createFixedScriptCard(file);
-                });
-                
-                gridHTML += '</div>';
-                
-                console.log('✅ Grid criado com sucesso!');
-                container.innerHTML = gridHTML;
-
-            } catch (error) {
-                console.error('❌ Erro ao carregar scripts:', error);
-                container.innerHTML = `
-                    <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
-                        <i class="fas fa-exclamation-triangle" style="font-size: 3rem; margin-bottom: 1rem; color: var(--warning);"></i>
-                        <p>Erro ao carregar scripts</p>
-                        <p style="font-size: 0.9rem; margin-top: 0.5rem;">
-                            <a href="https://github.com/kelven-optimizer/kelvenoptimizer" target="_blank" style="color: var(--primary);">
-                                Ver repositório no GitHub
-                            </a>
-                        </p>
-                    </div>
-                `;
-            }
-        }
-
-        // Inicializa quando a página carregar
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('📄 DOM carregado, iniciando scripts...');
-            loadFixedScripts();
-        });
-
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            /**
+             * Verifica se um elemento existe antes de manipular
+             */
+            safeQuerySelector: (selector) => {
+                try {
+                    return document.querySelector(selector);
+                } catch (error) {
+                    console.warn(`Elemento não encontrado: ${selector}`, error);
+                    return null;
                 }
-            });
-        });
-
-        // Header effect on scroll
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.style.background = 'rgba(10, 10, 15, 0.98)';
-                header.style.backdropFilter = 'blur(15px)';
-            } else {
-                header.style.background = 'rgba(10, 10, 15, 0.95)';
-                header.style.backdropFilter = 'blur(10px)';
             }
-        });
+        };
+
+        // ============================================
+        // DOWNLOAD DE SCRIPTS
+        // ============================================
+        const DownloadManager = {
+            /**
+             * Baixa um script do GitHub
+             * @param {string} scriptName - Nome do arquivo do script
+             */
+            downloadScript: (scriptName) => {
+                try {
+                    const downloadUrl = CONFIG.GITHUB_BASE_URL + scriptName;
+                    const link = Utils.createElement('a', {
+                        href: downloadUrl,
+                        download: scriptName,
+                        target: '_blank',
+                        rel: 'noopener noreferrer'
+                    });
+
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+
+                    // Feedback visual melhorado
+                    const message = `Iniciando download: ${scriptName}\n\n📋 Importante:\n• Execute como Administrador\n• Crie ponto de restauração antes\n• Leia o código antes de executar`;
+
+                    // Tenta usar notificação moderna, fallback para alert
+                    if ('Notification' in window && Notification.permission === 'granted') {
+                        new Notification('KelvenOS Optimizer', {
+                            body: `Download iniciado: ${scriptName}`,
+                            icon: 'https://github.com/kelven-optimizer/kelvenoptimizer/blob/7848345f64f7bbe49e3357a73d74300a8ac1ab82/imagens/kelvenos.png?raw=true'
+                        });
+                    } else {
+                        alert(message);
+                    }
+                } catch (error) {
+                    console.error('Erro ao baixar script:', error);
+                    alert(`Erro ao iniciar download de ${scriptName}. Por favor, tente novamente.`);
+                }
+            }
+        };
+
+        // ============================================
+        // COUNTDOWN TIMER
+        // ============================================
+        const CountdownTimer = {
+            intervalId: null,
+            targetDate: new Date(CONFIG.COUNTDOWN_TARGET),
+
+            /**
+             * Atualiza o contador regressivo
+             */
+            update: () => {
+                const now = new Date();
+                const difference = CountdownTimer.targetDate - now;
+                const countdownContainer = Utils.safeQuerySelector('.countdown-container');
+
+                if (!countdownContainer) return;
+
+                if (difference > 0) {
+                    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                    const updateElement = (id, value) => {
+                        const element = document.getElementById(id);
+                        if (element) element.textContent = String(value).padStart(2, '0');
+                    };
+
+                    updateElement('days', days);
+                    updateElement('hours', hours);
+                    updateElement('minutes', minutes);
+                    updateElement('seconds', seconds);
+                } else {
+                    CountdownTimer.complete();
+                }
+            },
+
+            /**
+             * Exibe mensagem quando o countdown termina
+             */
+            complete: () => {
+                const countdownContainer = Utils.safeQuerySelector('.countdown-container');
+                if (countdownContainer) {
+                    countdownContainer.innerHTML = `
+                        <h3 class="countdown-title">🎉 Lançamento Disponível!</h3>
+                        <p style="color: var(--text-secondary); margin-top: 1rem;">Os novos produtos já estão disponíveis!</p>
+                    `;
+                }
+                if (CountdownTimer.intervalId) {
+                    clearInterval(CountdownTimer.intervalId);
+                }
+            },
+
+            /**
+             * Inicia o countdown
+             */
+            start: () => {
+                CountdownTimer.update();
+                CountdownTimer.intervalId = setInterval(CountdownTimer.update, 1000);
+            }
+        };
+
+        // ============================================
+        // NAVEGAÇÃO E SCROLL
+        // ============================================
+        const Navigation = {
+            /**
+             * Gerencia efeitos de scroll na navbar
+             */
+            handleScroll: Utils.debounce(() => {
+                const navbar = document.getElementById('navbar');
+                const scrollTop = document.getElementById('scrollTop');
+                const scrollY = window.scrollY;
+
+                if (navbar && scrollY > CONFIG.SCROLL_THRESHOLD) {
+                    navbar.classList.add('scrolled');
+                    if (scrollTop) scrollTop.classList.add('visible');
+                } else {
+                    if (navbar) navbar.classList.remove('scrolled');
+                    if (scrollTop) scrollTop.classList.remove('visible');
+                }
+            }, 10),
+
+            /**
+             * Configura scroll suave para âncoras
+             */
+            initSmoothScroll: () => {
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function(e) {
+                        const href = this.getAttribute('href');
+                        if (href === '#') return;
+
+                        e.preventDefault();
+                        const target = document.querySelector(href);
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    });
+                });
+            },
+
+            /**
+             * Botão scroll to top
+             */
+            initScrollToTop: () => {
+                const scrollTopBtn = document.getElementById('scrollTop');
+                if (scrollTopBtn) {
+                    scrollTopBtn.addEventListener('click', () => {
+                        window.scrollTo({
+                            top: 0,
+                            behavior: 'smooth'
+                        });
+                    });
+
+                    // Acessibilidade: navegação por teclado
+                    scrollTopBtn.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            scrollTopBtn.click();
+                        }
+                    });
+                }
+            }
+        };
+
+        // ============================================
+        // FAQ ACCORDION
+        // ============================================
+        const FAQ = {
+            /**
+             * Inicializa o sistema de accordion do FAQ
+             */
+            init: () => {
+                document.querySelectorAll('.faq-question').forEach(question => {
+                    question.addEventListener('click', () => {
+                        const faqItem = question.closest('.faq-item');
+                        if (!faqItem) return;
+
+                        const isActive = faqItem.classList.contains('active');
+                        const answer = faqItem.querySelector('.faq-answer');
+
+                        // Fecha todos os itens
+                        document.querySelectorAll('.faq-item').forEach(item => {
+                            item.classList.remove('active');
+                            const itemQuestion = item.querySelector('.faq-question');
+                            const itemAnswer = item.querySelector('.faq-answer');
+                            if (itemQuestion) itemQuestion.setAttribute('aria-expanded', 'false');
+                            if (itemAnswer) {
+                                itemAnswer.setAttribute('aria-hidden', 'true');
+                                itemAnswer.setAttribute('aria-expanded', 'false');
+                            }
+                        });
+
+                        // Abre o item clicado se estava fechado
+                        if (!isActive) {
+                            faqItem.classList.add('active');
+                            question.setAttribute('aria-expanded', 'true');
+                            if (answer) {
+                                answer.setAttribute('aria-hidden', 'false');
+                                answer.setAttribute('aria-expanded', 'true');
+                            }
+                        }
+                    });
+
+                    // Acessibilidade: navegação por teclado
+                    question.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            question.click();
+                        }
+                    });
+                });
+            }
+        };
+
+        // ============================================
+        // ANIMAÇÕES
+        // ============================================
+        const Animations = {
+            observer: null,
+
+            /**
+             * Configura Intersection Observer para animações
+             */
+            initObserver: () => {
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -100px 0px'
+                };
+
+                Animations.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                            // Para de observar após animação
+                            Animations.observer.unobserve(entry.target);
+                        }
+                    });
+                }, observerOptions);
+            },
+
+            /**
+             * Inicia animações de entrada
+             */
+            start: () => {
+                if (!Animations.observer) {
+                    Animations.initObserver();
+                }
+
+                const animatedElements = document.querySelectorAll(
+                    '.feature-card, .script-card, .stat-item, .product-card, .changelog-item, .doc-card, .community-card'
+                );
+
+                animatedElements.forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(30px)';
+                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    el.style.willChange = 'opacity, transform';
+                    Animations.observer.observe(el);
+                });
+            }
+        };
+
+        // ============================================
+        // EFEITOS VISUAIS
+        // ============================================
+        const VisualEffects = {
+            /**
+             * Adiciona efeito ripple aos botões
+             */
+            initRippleEffect: () => {
+                document.querySelectorAll('.download-btn, .btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        const rect = this.getBoundingClientRect();
+                        const size = Math.max(rect.width, rect.height);
+                        const x = e.clientX - rect.left - size / 2;
+                        const y = e.clientY - rect.top - size / 2;
+
+                        const ripple = Utils.createElement('span', {
+                            class: 'ripple-effect'
+                        });
+
+                        ripple.style.cssText = `
+                            position: absolute;
+                            width: ${size}px;
+                            height: ${size}px;
+                            left: ${x}px;
+                            top: ${y}px;
+                            border-radius: 50%;
+                            background: rgba(255, 255, 255, 0.6);
+                            transform: scale(0);
+                            animation: ripple 0.6s linear;
+                            pointer-events: none;
+                        `;
+
+                        this.style.position = 'relative';
+                        this.style.overflow = 'hidden';
+                        this.appendChild(ripple);
+
+                        setTimeout(() => {
+                            if (ripple.parentNode) {
+                                ripple.remove();
+                            }
+                        }, 600);
+                    });
+                });
+            }
+        };
+
+        // ============================================
+        // LOADING SCREEN
+        // ============================================
+        const LoadingScreen = {
+            /**
+             * Remove a tela de carregamento
+             */
+            hide: () => {
+                const overlay = document.getElementById('loadingOverlay');
+                if (overlay) {
+                    overlay.style.opacity = '0';
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                        overlay.remove();
+                    }, CONFIG.FADE_DURATION);
+                }
+            }
+        };
+
+        // ============================================
+        // MENU MOBILE
+        // ============================================
+        const MobileMenu = {
+            /**
+             * Inicializa o menu mobile
+             */
+            init: () => {
+                const toggle = document.querySelector('.mobile-menu-toggle');
+                const navLinks = document.querySelector('.nav-links');
+
+                if (toggle && navLinks) {
+                    toggle.addEventListener('click', () => {
+                        toggle.classList.toggle('active');
+                        navLinks.classList.toggle('active');
+                        const isActive = toggle.classList.contains('active');
+                        toggle.setAttribute('aria-expanded', isActive);
+                        navLinks.setAttribute('aria-expanded', isActive);
+                    });
+                }
+            }
+        };
+
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
+        const App = {
+            /**
+             * Inicializa todas as funcionalidades
+             */
+            init: () => {
+                // Aguarda carregamento completo
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', App.init);
+                    return;
+                }
+
+                // Loading screen
+                setTimeout(() => {
+                    LoadingScreen.hide();
+                    Animations.start();
+                    CountdownTimer.start();
+                }, CONFIG.ANIMATION_DELAY);
+
+                // Navegação
+                Navigation.initSmoothScroll();
+                Navigation.initScrollToTop();
+                window.addEventListener('scroll', Navigation.handleScroll, {
+                    passive: true
+                });
+
+                // FAQ
+                FAQ.init();
+
+                // Menu mobile
+                MobileMenu.init();
+
+                // Efeitos visuais
+                VisualEffects.initRippleEffect();
+
+                // Adiciona animação ripple ao CSS
+                if (!document.getElementById('ripple-animation-style')) {
+                    const style = Utils.createElement('style', {
+                        id: 'ripple-animation-style'
+                    });
+                    style.textContent = `
+                        @keyframes ripple {
+                            to {
+                                transform: scale(4);
+                                opacity: 0;
+                            }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+
+                // Solicita permissão para notificações (se suportado)
+                if ('Notification' in window && Notification.permission === 'default') {
+                    Notification.requestPermission().catch(() => {
+                        // Ignora se o usuário negar
+                    });
+                }
+            }
+        };
+
+        // ============================================
+        // EXPORT PARA USO GLOBAL
+        // ============================================
+        window.downloadScript = DownloadManager.downloadScript;
+
+        // ============================================
+        // INICIALIZA A APLICAÇÃO
+        // ============================================
+        App.init();
     </script>
 </body>
+
 </html>
