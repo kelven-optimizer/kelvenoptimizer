@@ -60,7 +60,7 @@ KelvenOS Optimizer é uma coleção completa de scripts PowerShell e Batch para 
 ## 🚀 Como Usar
 
 ### 1. Baixar Scripts
-1. Acesse: (https://github.com/kelven-optimizer/kelvenoptimizer)
+1. Acesse: (https://kelven-optimizer.vercel.app)
 2. Clique em "Baixar" no script desejado
 3. O download será feito automaticamente
 
